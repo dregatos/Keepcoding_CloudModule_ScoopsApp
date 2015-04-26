@@ -7,8 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+
+#define AZURE_MOBILESERVICE_URL         @"https://scoopsmobileservice.azure-mobile.net/"
+#define AZURE_MOBILESERVICE_APPKEY      @"ApdmhWVKozUMmeeUabiSigayAsRswz24"
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) MSClient *client;
 
 @end
 
@@ -17,6 +23,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.client = [MSClient clientWithApplicationURLString:AZURE_MOBILESERVICE_URL
+                                            applicationKey:AZURE_MOBILESERVICE_APPKEY];
+    
     return YES;
 }
 

@@ -13,6 +13,7 @@
 		074F67831AED3977009FABEC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 074F67821AED3977009FABEC /* Images.xcassets */; };
 		074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F67841AED3977009FABEC /* LaunchScreen.xib */; };
 		074F67921AED3977009FABEC /* ScoopsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67911AED3977009FABEC /* ScoopsAppTests.m */; };
+		074F679F1AED4A16009FABEC /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F679E1AED4A16009FABEC /* WindowsAzureMobileServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		074F678B1AED3977009FABEC /* ScoopsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoopsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		074F67901AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		074F67911AED3977009FABEC /* ScoopsAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoopsAppTests.m; sourceTree = "<group>"; };
+		074F679E1AED4A16009FABEC /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F679F1AED4A16009FABEC /* WindowsAzureMobileServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +66,7 @@
 				074F67741AED3977009FABEC /* ScoopsApp */,
 				074F678E1AED3977009FABEC /* ScoopsAppTests */,
 				074F67731AED3977009FABEC /* Products */,
+				074F679E1AED4A16009FABEC /* WindowsAzureMobileServices.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,6 +191,7 @@
 				TargetAttributes = {
 					074F67711AED3977009FABEC = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = T6SP5NF68Z;
 					};
 					074F678A1AED3977009FABEC = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -365,6 +370,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ScoopsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -375,6 +385,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ScoopsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
