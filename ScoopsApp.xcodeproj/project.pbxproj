@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		074F67781AED3977009FABEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67771AED3977009FABEC /* main.m */; };
+		074F677B1AED3977009FABEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F677A1AED3977009FABEC /* AppDelegate.m */; };
+		074F67811AED3977009FABEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074F677F1AED3977009FABEC /* Main.storyboard */; };
+		074F67831AED3977009FABEC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 074F67821AED3977009FABEC /* Images.xcassets */; };
+		074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F67841AED3977009FABEC /* LaunchScreen.xib */; };
+		074F67921AED3977009FABEC /* ScoopsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67911AED3977009FABEC /* ScoopsAppTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		074F678C1AED3977009FABEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 074F676A1AED3977009FABEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 074F67711AED3977009FABEC;
+			remoteInfo = ScoopsApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		074F67721AED3977009FABEC /* ScoopsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoopsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		074F67761AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		074F67771AED3977009FABEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		074F67791AED3977009FABEC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		074F677A1AED3977009FABEC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		074F67801AED3977009FABEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		074F67821AED3977009FABEC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		074F67851AED3977009FABEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		074F678B1AED3977009FABEC /* ScoopsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoopsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		074F67901AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		074F67911AED3977009FABEC /* ScoopsAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoopsAppTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		074F676F1AED3977009FABEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074F67881AED3977009FABEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		074F67691AED3977009FABEC = {
+			isa = PBXGroup;
+			children = (
+				074F67741AED3977009FABEC /* ScoopsApp */,
+				074F678E1AED3977009FABEC /* ScoopsAppTests */,
+				074F67731AED3977009FABEC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		074F67731AED3977009FABEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				074F67721AED3977009FABEC /* ScoopsApp.app */,
+				074F678B1AED3977009FABEC /* ScoopsAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		074F67741AED3977009FABEC /* ScoopsApp */ = {
+			isa = PBXGroup;
+			children = (
+				074F67791AED3977009FABEC /* AppDelegate.h */,
+				074F677A1AED3977009FABEC /* AppDelegate.m */,
+				074F67821AED3977009FABEC /* Images.xcassets */,
+				074F67841AED3977009FABEC /* LaunchScreen.xib */,
+				074F677F1AED3977009FABEC /* Main.storyboard */,
+				074F679B1AED39A2009FABEC /* Models */,
+				074F679C1AED39A8009FABEC /* Views */,
+				074F679D1AED39AC009FABEC /* Controllers */,
+				074F67751AED3977009FABEC /* Supporting Files */,
+			);
+			path = ScoopsApp;
+			sourceTree = "<group>";
+		};
+		074F67751AED3977009FABEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				074F67761AED3977009FABEC /* Info.plist */,
+				074F67771AED3977009FABEC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		074F678E1AED3977009FABEC /* ScoopsAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				074F67911AED3977009FABEC /* ScoopsAppTests.m */,
+				074F678F1AED3977009FABEC /* Supporting Files */,
+			);
+			path = ScoopsAppTests;
+			sourceTree = "<group>";
+		};
+		074F678F1AED3977009FABEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				074F67901AED3977009FABEC /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		074F679B1AED39A2009FABEC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		074F679C1AED39A8009FABEC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		074F679D1AED39AC009FABEC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		074F67711AED3977009FABEC /* ScoopsApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 074F67951AED3977009FABEC /* Build configuration list for PBXNativeTarget "ScoopsApp" */;
+			buildPhases = (
+				074F676E1AED3977009FABEC /* Sources */,
+				074F676F1AED3977009FABEC /* Frameworks */,
+				074F67701AED3977009FABEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScoopsApp;
+			productName = ScoopsApp;
+			productReference = 074F67721AED3977009FABEC /* ScoopsApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		074F678A1AED3977009FABEC /* ScoopsAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 074F67981AED3977009FABEC /* Build configuration list for PBXNativeTarget "ScoopsAppTests" */;
+			buildPhases = (
+				074F67871AED3977009FABEC /* Sources */,
+				074F67881AED3977009FABEC /* Frameworks */,
+				074F67891AED3977009FABEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				074F678D1AED3977009FABEC /* PBXTargetDependency */,
+			);
+			name = ScoopsAppTests;
+			productName = ScoopsAppTests;
+			productReference = 074F678B1AED3977009FABEC /* ScoopsAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		074F676A1AED3977009FABEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = DRG;
+				TargetAttributes = {
+					074F67711AED3977009FABEC = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					074F678A1AED3977009FABEC = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 074F67711AED3977009FABEC;
+					};
+				};
+			};
+			buildConfigurationList = 074F676D1AED3977009FABEC /* Build configuration list for PBXProject "ScoopsApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 074F67691AED3977009FABEC;
+			productRefGroup = 074F67731AED3977009FABEC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				074F67711AED3977009FABEC /* ScoopsApp */,
+				074F678A1AED3977009FABEC /* ScoopsAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		074F67701AED3977009FABEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074F67811AED3977009FABEC /* Main.storyboard in Resources */,
+				074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */,
+				074F67831AED3977009FABEC /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074F67891AED3977009FABEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		074F676E1AED3977009FABEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074F677B1AED3977009FABEC /* AppDelegate.m in Sources */,
+				074F67781AED3977009FABEC /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074F67871AED3977009FABEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074F67921AED3977009FABEC /* ScoopsAppTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		074F678D1AED3977009FABEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 074F67711AED3977009FABEC /* ScoopsApp */;
+			targetProxy = 074F678C1AED3977009FABEC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		074F677F1AED3977009FABEC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				074F67801AED3977009FABEC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		074F67841AED3977009FABEC /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				074F67851AED3977009FABEC /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		074F67931AED3977009FABEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		074F67941AED3977009FABEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		074F67961AED3977009FABEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ScoopsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		074F67971AED3977009FABEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ScoopsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		074F67991AED3977009FABEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ScoopsAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScoopsApp.app/ScoopsApp";
+			};
+			name = Debug;
+		};
+		074F679A1AED3977009FABEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ScoopsAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScoopsApp.app/ScoopsApp";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		074F676D1AED3977009FABEC /* Build configuration list for PBXProject "ScoopsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074F67931AED3977009FABEC /* Debug */,
+				074F67941AED3977009FABEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		074F67951AED3977009FABEC /* Build configuration list for PBXNativeTarget "ScoopsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074F67961AED3977009FABEC /* Debug */,
+				074F67971AED3977009FABEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		074F67981AED3977009FABEC /* Build configuration list for PBXNativeTarget "ScoopsAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074F67991AED3977009FABEC /* Debug */,
+				074F679A1AED3977009FABEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 074F676A1AED3977009FABEC /* Project object */;
+}
