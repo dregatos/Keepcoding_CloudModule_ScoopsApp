@@ -24,7 +24,6 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 + (instancetype)sharedInstance;
 
 @property (nonatomic, readonly) MSClient *client;
-//@property (nonatomic, strong) MSUser *currentUser;
 
 - (BOOL)loadUserAuthInfo;
 - (void)saveAuthInfo;

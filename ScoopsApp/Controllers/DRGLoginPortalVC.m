@@ -63,10 +63,13 @@
                                                         if (error) {
                                                             NSLog(@"Error en el login : %@", error);
                                                             completionBlock(nil,error);
+                                                            [self dismissViewControllerAnimated:YES completion:nil];
+
                                                         } else {
                                                             NSLog(@"user -> %@", user);
                                                             completionBlock(user,nil);
                                                         }
+                                                        
                                                     }];
 }
 

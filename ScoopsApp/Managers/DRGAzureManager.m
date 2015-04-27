@@ -21,8 +21,6 @@ NSString * const tokenFBKey = @"tokenFB";
 
 @implementation DRGAzureManager
 
-//@synthesize currentUser = _currentUser;
-
 #pragma mark - Singleton
 
 + (instancetype)sharedInstance {
@@ -45,15 +43,6 @@ NSString * const tokenFBKey = @"tokenFB";
     return _client;
 }
 
-//- (MSUser *)currentUser {
-//    return self.client.currentUser;
-//}
-//
-//- (void)setCurrentUser:(MSUser *)currentUser {
-//    _currentUser = currentUser;
-//    self.client.currentUser = currentUser;
-//}
-
 #pragma mark - User persistance
 
 - (BOOL)loadUserAuthInfo {
@@ -73,8 +62,13 @@ NSString * const tokenFBKey = @"tokenFB";
 }
 
 - (void)resetAuthInfo {
-    self.client = nil;
-    [self saveAuthInfo];
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:userIDKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenFBKey];
+
+    for (NSHTTPCookie *value in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:value];
+    }
 }
 
 - (void)saveAuthInfo {
