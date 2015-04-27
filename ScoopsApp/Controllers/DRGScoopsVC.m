@@ -10,6 +10,7 @@
 #import "DRGAzureManager.h"
 #import "DRGReader.h"
 #import "UIImageView+AsyncDownload.h"
+#import "UIViewController+Alert.h"
 
 @interface DRGScoopsVC ()
 
@@ -58,6 +59,7 @@
                                                 
                                                 if (error) {
                                                     NSLog(@"Error -->> %@", error.localizedDescription);
+                                                    [self showAlertWithMessage:error.localizedDescription];
                                                 }
                                                 
                                                 NSLog(@"getCurrentUserInfo ->> %@", result);

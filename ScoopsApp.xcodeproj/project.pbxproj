@@ -10,6 +10,7 @@
 		070C4E471AEE4B9D00D418DB /* DRGReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E461AEE4B9D00D418DB /* DRGReader.m */; };
 		070C4E4A1AEE705F00D418DB /* DRGScoopsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E491AEE705F00D418DB /* DRGScoopsVC.m */; };
 		070C4E4E1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */; };
+		070C4E511AEE8EDA00D418DB /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E501AEE8EDA00D418DB /* UIViewController+Alert.m */; };
 		074F67781AED3977009FABEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67771AED3977009FABEC /* main.m */; };
 		074F677B1AED3977009FABEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F677A1AED3977009FABEC /* AppDelegate.m */; };
 		074F67811AED3977009FABEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074F677F1AED3977009FABEC /* Main.storyboard */; };
@@ -39,6 +40,8 @@
 		070C4E491AEE705F00D418DB /* DRGScoopsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGScoopsVC.m; sourceTree = "<group>"; };
 		070C4E4C1AEE7E1A00D418DB /* UIImageView+AsyncDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AsyncDownload.h"; sourceTree = "<group>"; };
 		070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AsyncDownload.m"; sourceTree = "<group>"; };
+		070C4E4F1AEE8EDA00D418DB /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
+		070C4E501AEE8EDA00D418DB /* UIViewController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
 		074F67721AED3977009FABEC /* ScoopsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoopsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		074F67761AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		074F67771AED3977009FABEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,6 +86,8 @@
 			children = (
 				070C4E4C1AEE7E1A00D418DB /* UIImageView+AsyncDownload.h */,
 				070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */,
+				070C4E4F1AEE8EDA00D418DB /* UIViewController+Alert.h */,
+				070C4E501AEE8EDA00D418DB /* UIViewController+Alert.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -293,6 +298,7 @@
 				074F677B1AED3977009FABEC /* AppDelegate.m in Sources */,
 				074F67781AED3977009FABEC /* main.m in Sources */,
 				074F67A31AED50CD009FABEC /* DRGLoginPortalVC.m in Sources */,
+				070C4E511AEE8EDA00D418DB /* UIViewController+Alert.m in Sources */,
 				070C4E4E1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m in Sources */,
 				074F67AA1AED5751009FABEC /* DRGAzureManager.m in Sources */,
 				070C4E471AEE4B9D00D418DB /* DRGReader.m in Sources */,

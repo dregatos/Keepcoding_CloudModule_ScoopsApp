@@ -9,6 +9,7 @@
 #import "DRGLoginPortalVC.h"
 #import "DRGAzureManager.h"
 #import "DRGReader.h"
+#import "UIViewController+Alert.h"
 
 @interface DRGLoginPortalVC ()
 
@@ -39,22 +40,25 @@
                                                     controller:self
                                                       animated:YES
                                                     completion:^(MSUser *user, NSError *error) {
-                                                        
-                                                        if (error) {
-                                                            NSLog(@"Error en el login : %@", error);
-
-                                                        } else {
+                            
+                                                        if (!error && user) {
                                                             NSLog(@"user -> %@", user);
-                                                            if (user) {
-                                                                [DRGAzureManager sharedInstance].client.currentUser = user;
-                                                                [[DRGAzureManager sharedInstance] saveAuthInfo];
-                                                                [self presentMainStoryboard];
-                                                                return;
-                                                            }
+                                                            [[DRGAzureManager sharedInstance] saveAuthInfo];
+                                                            [self presentMainStoryboard];
+                                                            return;
                                                         }
                                                         
                                                         // Be sure to dismiss login VC
                                                         [self dismissViewControllerAnimated:YES completion:nil];
+                                                        
+                                                        if (error) {
+                                                            NSLog(@"Authentication Error: %@", error);
+                                                            [self showAlertWithMessage:error.localizedDescription];
+                                                        } else if (!user) {
+                                                            [self showAlertWithMessage:@"Unable to get user info."];
+                                                        } else {
+                                                            [self showAlertWithMessage:@"Unknown error."];
+                                                        }
                                                     }];
 }
 
