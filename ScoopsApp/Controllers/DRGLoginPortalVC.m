@@ -21,55 +21,40 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    
 }
 
 #pragma mark - IBActions
 
 - (IBAction)logInViaFacebook:(UIButton *)sender {
     
-    [self loginAppInViewController:self withCompletion:^(MSUser *user, NSError *error) {
-        
-        if (error) {
-            NSLog(@"Error -->> %@", error.localizedDescription);
-            // TO DO: show error
-            return;
-        }
-        
-        NSLog(@"Resultados ---> %@", user);
-        if (user) {
-            [DRGAzureManager sharedInstance].client.currentUser = user;
-            [[DRGAzureManager sharedInstance] saveAuthInfo];
-            [self presentMainStoryboard];
-        }
-    }];
+    [self loginWithProvider:@"facebook"];
 }
 
 #pragma mark - Login
 
-- (void)loginAppInViewController:(UIViewController *)controller
-                  withCompletion:(void(^)(MSUser *user, NSError *error))completionBlock {
+- (void)loginWithProvider:(NSString *)provider {
     
-    [[DRGAzureManager sharedInstance].client loginWithProvider:@"facebook"
-                                                    controller:controller
+    [[DRGAzureManager sharedInstance].client loginWithProvider:provider
+                                                    controller:self
                                                       animated:YES
                                                     completion:^(MSUser *user, NSError *error) {
                                                         
                                                         if (error) {
                                                             NSLog(@"Error en el login : %@", error);
-                                                            completionBlock(nil,error);
-                                                            [self dismissViewControllerAnimated:YES completion:nil];
 
                                                         } else {
                                                             NSLog(@"user -> %@", user);
-                                                            completionBlock(user,nil);
+                                                            if (user) {
+                                                                [DRGAzureManager sharedInstance].client.currentUser = user;
+                                                                [[DRGAzureManager sharedInstance] saveAuthInfo];
+                                                                [self presentMainStoryboard];
+                                                                return;
+                                                            }
                                                         }
                                                         
+                                                        // Be sure to dismiss login VC
+                                                        [self dismissViewControllerAnimated:YES completion:nil];
                                                     }];
 }
 
