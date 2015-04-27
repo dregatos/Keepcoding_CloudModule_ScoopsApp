@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8c3-pX-e21">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <scenes>
+        <!--Login PortalVC-->
+        <scene sceneID="uRU-Fw-yfI">
+            <objects>
+                <viewController storyboardIdentifier="DRGLoginPortalVC" id="8c3-pX-e21" customClass="DRGLoginPortalVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dyr-FJ-3AG"/>
+                        <viewControllerLayoutGuide type="bottom" id="KRK-0J-gWR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="T7X-zX-H6W">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECi-27-K1q">
+                                <rect key="frame" x="225" y="275" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Duy-Jp-xKF"/>
+                                    <constraint firstAttribute="width" constant="150" id="fiH-e4-cbo"/>
+                                </constraints>
+                                <state key="normal" title="Facebook">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInViaFacebook:" destination="8c3-pX-e21" eventType="touchUpInside" id="ucn-20-I4k"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31g-Vb-W6F">
+                                <rect key="frame" x="258" y="246" width="84" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scoops" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbr-zX-bvI">
+                                <rect key="frame" x="271" y="28" width="59" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ECi-27-K1q" firstAttribute="top" secondItem="31g-Vb-W6F" secondAttribute="bottom" constant="8" id="0om-jK-jaC"/>
+                            <constraint firstAttribute="centerX" secondItem="sbr-zX-bvI" secondAttribute="centerX" id="1Gx-AQ-By5"/>
+                            <constraint firstItem="31g-Vb-W6F" firstAttribute="centerX" secondItem="ECi-27-K1q" secondAttribute="centerX" id="On8-d5-0gy"/>
+                            <constraint firstAttribute="centerX" secondItem="ECi-27-K1q" secondAttribute="centerX" id="VKI-eO-G5Y"/>
+                            <constraint firstItem="sbr-zX-bvI" firstAttribute="top" secondItem="dyr-FJ-3AG" secondAttribute="bottom" constant="8" symbolic="YES" id="hDY-3C-0Wu"/>
+                            <constraint firstAttribute="centerY" secondItem="ECi-27-K1q" secondAttribute="centerY" id="yAR-3T-GG9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="facebookBtn" destination="ECi-27-K1q" id="uJI-4z-mid"/>
+                        <outlet property="loginLbl" destination="31g-Vb-W6F" id="Dgq-of-e2h"/>
+                        <outlet property="scoopsLbl" destination="sbr-zX-bvI" id="lCR-eW-u4Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fvm-zi-oxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="95" y="380"/>
+        </scene>
+    </scenes>
+</document>

@@ -7,14 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
-
-#define AZURE_MOBILESERVICE_URL         @"https://scoopsmobileservice.azure-mobile.net/"
-#define AZURE_MOBILESERVICE_APPKEY      @"ApdmhWVKozUMmeeUabiSigayAsRswz24"
+#import "DRGAzureManager.h"
 
 @interface AppDelegate ()
-
-@property (strong, nonatomic) MSClient *client;
 
 @end
 
@@ -24,8 +19,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.client = [MSClient clientWithApplicationURLString:AZURE_MOBILESERVICE_URL
-                                            applicationKey:AZURE_MOBILESERVICE_APPKEY];
+    [[DRGAzureManager sharedInstance] loadUserAuthInfo];
+    
+    if ([DRGAzureManager sharedInstance].client.currentUser) {
+        // If user is already logged, then skip the login portal
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *navController = (UINavigationController *)[mainStoryboard instantiateInitialViewController];
+        self.window.rootViewController = navController;
+    }
     
     return YES;
 }

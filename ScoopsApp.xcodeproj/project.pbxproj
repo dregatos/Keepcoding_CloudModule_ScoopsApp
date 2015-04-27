@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070C4E471AEE4B9D00D418DB /* DRGReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E461AEE4B9D00D418DB /* DRGReader.m */; };
+		070C4E4A1AEE705F00D418DB /* DRGScoopsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E491AEE705F00D418DB /* DRGScoopsVC.m */; };
+		070C4E4E1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */; };
 		074F67781AED3977009FABEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67771AED3977009FABEC /* main.m */; };
 		074F677B1AED3977009FABEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F677A1AED3977009FABEC /* AppDelegate.m */; };
 		074F67811AED3977009FABEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074F677F1AED3977009FABEC /* Main.storyboard */; };
@@ -14,6 +17,9 @@
 		074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F67841AED3977009FABEC /* LaunchScreen.xib */; };
 		074F67921AED3977009FABEC /* ScoopsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67911AED3977009FABEC /* ScoopsAppTests.m */; };
 		074F679F1AED4A16009FABEC /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F679E1AED4A16009FABEC /* WindowsAzureMobileServices.framework */; };
+		074F67A31AED50CD009FABEC /* DRGLoginPortalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67A21AED50CD009FABEC /* DRGLoginPortalVC.m */; };
+		074F67A61AED510E009FABEC /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074F67A41AED510E009FABEC /* Login.storyboard */; };
+		074F67AA1AED5751009FABEC /* DRGAzureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67A91AED5751009FABEC /* DRGAzureManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +33,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		070C4E451AEE4B9D00D418DB /* DRGReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGReader.h; sourceTree = "<group>"; };
+		070C4E461AEE4B9D00D418DB /* DRGReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGReader.m; sourceTree = "<group>"; };
+		070C4E481AEE705F00D418DB /* DRGScoopsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGScoopsVC.h; sourceTree = "<group>"; };
+		070C4E491AEE705F00D418DB /* DRGScoopsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGScoopsVC.m; sourceTree = "<group>"; };
+		070C4E4C1AEE7E1A00D418DB /* UIImageView+AsyncDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AsyncDownload.h"; sourceTree = "<group>"; };
+		070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AsyncDownload.m"; sourceTree = "<group>"; };
 		074F67721AED3977009FABEC /* ScoopsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoopsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		074F67761AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		074F67771AED3977009FABEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -39,6 +51,12 @@
 		074F67901AED3977009FABEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		074F67911AED3977009FABEC /* ScoopsAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoopsAppTests.m; sourceTree = "<group>"; };
 		074F679E1AED4A16009FABEC /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
+		074F67A11AED50CD009FABEC /* DRGLoginPortalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGLoginPortalVC.h; sourceTree = "<group>"; };
+		074F67A21AED50CD009FABEC /* DRGLoginPortalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGLoginPortalVC.m; sourceTree = "<group>"; };
+		074F67A51AED510E009FABEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		074F67A81AED5751009FABEC /* DRGAzureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGAzureManager.h; sourceTree = "<group>"; };
+		074F67A91AED5751009FABEC /* DRGAzureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGAzureManager.m; sourceTree = "<group>"; };
+		074F67AB1AED5A6A009FABEC /* AzureKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AzureKeys.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		070C4E4B1AEE7DC800D418DB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				070C4E4C1AEE7E1A00D418DB /* UIImageView+AsyncDownload.h */,
+				070C4E4D1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		074F67691AED3977009FABEC = {
 			isa = PBXGroup;
 			children = (
@@ -86,7 +113,10 @@
 				074F677A1AED3977009FABEC /* AppDelegate.m */,
 				074F67821AED3977009FABEC /* Images.xcassets */,
 				074F67841AED3977009FABEC /* LaunchScreen.xib */,
+				074F67A41AED510E009FABEC /* Login.storyboard */,
 				074F677F1AED3977009FABEC /* Main.storyboard */,
+				070C4E4B1AEE7DC800D418DB /* Categories */,
+				074F67A71AED5725009FABEC /* Managers */,
 				074F679B1AED39A2009FABEC /* Models */,
 				074F679C1AED39A8009FABEC /* Views */,
 				074F679D1AED39AC009FABEC /* Controllers */,
@@ -124,6 +154,8 @@
 		074F679B1AED39A2009FABEC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				070C4E451AEE4B9D00D418DB /* DRGReader.h */,
+				070C4E461AEE4B9D00D418DB /* DRGReader.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,8 +170,22 @@
 		074F679D1AED39AC009FABEC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				074F67A11AED50CD009FABEC /* DRGLoginPortalVC.h */,
+				074F67A21AED50CD009FABEC /* DRGLoginPortalVC.m */,
+				070C4E481AEE705F00D418DB /* DRGScoopsVC.h */,
+				070C4E491AEE705F00D418DB /* DRGScoopsVC.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		074F67A71AED5725009FABEC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				074F67AB1AED5A6A009FABEC /* AzureKeys.h */,
+				074F67A81AED5751009FABEC /* DRGAzureManager.h */,
+				074F67A91AED5751009FABEC /* DRGAzureManager.m */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F67A61AED510E009FABEC /* Login.storyboard in Resources */,
 				074F67811AED3977009FABEC /* Main.storyboard in Resources */,
 				074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */,
 				074F67831AED3977009FABEC /* Images.xcassets in Resources */,
@@ -245,6 +292,11 @@
 			files = (
 				074F677B1AED3977009FABEC /* AppDelegate.m in Sources */,
 				074F67781AED3977009FABEC /* main.m in Sources */,
+				074F67A31AED50CD009FABEC /* DRGLoginPortalVC.m in Sources */,
+				070C4E4E1AEE7E1A00D418DB /* UIImageView+AsyncDownload.m in Sources */,
+				074F67AA1AED5751009FABEC /* DRGAzureManager.m in Sources */,
+				070C4E471AEE4B9D00D418DB /* DRGReader.m in Sources */,
+				070C4E4A1AEE705F00D418DB /* DRGScoopsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +333,14 @@
 				074F67851AED3977009FABEC /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		074F67A41AED510E009FABEC /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				074F67A51AED510E009FABEC /* Base */,
+			);
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
