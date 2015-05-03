@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "DRGAzureManager.h"
 
+#import "DRGScoop.h"
+
 @interface AppDelegate ()
 
 @end
@@ -27,7 +29,7 @@
         UINavigationController *navController = (UINavigationController *)[mainStoryboard instantiateInitialViewController];
         self.window.rootViewController = navController;
     }
-    
+        
     return YES;
 }
 

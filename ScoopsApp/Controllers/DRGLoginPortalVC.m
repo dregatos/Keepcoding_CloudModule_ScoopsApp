@@ -8,7 +8,7 @@
 
 #import "DRGLoginPortalVC.h"
 #import "DRGAzureManager.h"
-#import "DRGReader.h"
+#import "DRGUser.h"
 #import "UIViewController+Alert.h"
 
 @interface DRGLoginPortalVC ()

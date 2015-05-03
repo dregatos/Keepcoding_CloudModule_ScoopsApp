@@ -10,7 +10,7 @@
 
 @class DRGScoop;
 
-@interface DRGScoopCell : UITableViewCell
+@interface DRGPublishedCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *headlineLbl;

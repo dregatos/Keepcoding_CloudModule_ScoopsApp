@@ -7,6 +7,8 @@
 //
 
 #import "DRGAzureManager.h"
+#import "DRGScoop.h"
+#import "DRGUser.h"
 
 NSString * const AZURE_MOBILESERVICE_URL = @"https://scoopsmobileservice.azure-mobile.net/";
 NSString * const AZURE_MOBILESERVICE_APPKEY = @"ApdmhWVKozUMmeeUabiSigayAsRswz24";
@@ -37,11 +39,105 @@ NSString * const tokenFBKey = @"tokenFB";
 - (MSClient *)client  {
     if  (!_client) {
         _client = [MSClient clientWithApplicationURLString:AZURE_MOBILESERVICE_URL
-                                                     applicationKey:AZURE_MOBILESERVICE_APPKEY];
+                                            applicationKey:AZURE_MOBILESERVICE_APPKEY];
     }
     
     return _client;
 }
+
+#pragma mark - API
+
+- (void)fetchAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance].client invokeAPI:@"getallpublishedscoops"
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:nil
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                completionBlock([mArr copy],error);
+                                            }];
+}
+
+- (void)fetchCurrentUserPublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance].client invokeAPI:@"getcurrentuserpublished"
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:nil
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                completionBlock([mArr copy],error);
+                                            }];
+}
+
+- (void)fetchCurrentUserUnpublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance].client invokeAPI:@"getcurrentuserunpublished"
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:nil
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                completionBlock([mArr copy],error);
+                                            }];
+}
+
+- (void)uploadScoop:(DRGScoop *)newScoop
+      withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock {
+    
+    MSTable *news = [[DRGAzureManager sharedInstance].client tableWithName:@"scoops"];
+    [news insert:[DRGScoop dictionaryFromScoop:newScoop]
+      completion:^(NSDictionary *item, NSError *error) {
+          DRGScoop *scoop = [DRGScoop scoopFromDictionary:item];
+          completionBlock(scoop, error);
+      }];
+}
+
+- (void)updateScoop:(DRGScoop *)updatedScoop
+      withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock {
+    
+    MSTable *news = [[DRGAzureManager sharedInstance].client tableWithName:@"scoops"];
+    [news update:[DRGScoop dictionaryFromScoop:updatedScoop]
+      completion:^(NSDictionary *item, NSError *error) {
+          DRGScoop *scoop = [DRGScoop scoopFromDictionary:item];
+          completionBlock(scoop, error);
+      }];
+}
+
+- (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance].client invokeAPI:@"getCurrentUserInfo"
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:nil
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                DRGUser *user = [DRGUser userFromFacebook:result];
+                                                completionBlock(user,error);
+                                            }];
+}
+
 
 #pragma mark - User persistance
 

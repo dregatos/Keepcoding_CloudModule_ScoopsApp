@@ -2,32 +2,22 @@
 //  DRGScoopsVC.m
 //  ScoopsApp
 //
-//  Created by David Regatos on 27/04/15.
+//  Created by David Regatos on 28/04/15.
 //  Copyright (c) 2015 DRG. All rights reserved.
 //
 
 #import "DRGScoopsVC.h"
 #import "DRGAzureManager.h"
 #import "DRGScoop.h"
-#import "DRGReader.h"
-#import "DRGScoopCell.h"
+#import "DRGPublishedCell.h"
 #import "UIImageView+AsyncDownload.h"
 #import "UIViewController+Alert.h"
 
 @interface DRGScoopsVC ()
 
-@property (nonatomic, strong) DRGReader *reader;
-
 @end
 
 @implementation DRGScoopsVC
-
-- (void)setReader:(DRGReader *)reader {
-    _reader = reader;
-    
-    self.userNameLbl.text = reader.name;
-    [self.userImageView asyncDownloadFromURL:reader.pictureURL];
-}
 
 - (NSMutableArray *)model  {
     if  (!_model) _model = [[NSMutableArray alloc] init];
@@ -39,7 +29,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     if (self = [super initWithCoder:aDecoder]) {
-        self.title = @"Scoops";
+
     }
     
     return self;
@@ -56,15 +46,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.delegate = self;
+    // hidden rows if self.model.count = 0
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    [self loadDummyData];
+    [self setupRefreshController];
+    [self setupNavBar];
+    [self fetchScoops];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    [self fetchCurrentUserInfo];
+}
+
+#pragma mark - Appearance 
+
+- (void)setupNavBar {
+    
+    self.title = @"Scoops";
+
+    UIBarButtonItem *logoutBtn = [[UIBarButtonItem alloc] initWithTitle:@"Log out"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(logOut:)];
+    self.navigationItem.leftBarButtonItem = logoutBtn;
+    
+    UIBarButtonItem *editorBtn = [[UIBarButtonItem alloc] initWithTitle:@"Editor"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(showEditorMode:)];
+    self.navigationItem.rightBarButtonItem = editorBtn;
+}
+
+- (void)displayMessageOnTableview:(UITableView *)tableView {
+    
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:tableView.bounds];
+    
+    messageLabel.text = @"No data is currently available.\nPlease pull down to refresh.";
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.numberOfLines = 0;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+    [messageLabel sizeToFit];
+    
+    tableView.backgroundView = messageLabel;
 }
 
 #pragma mark - IBActions
@@ -75,10 +100,29 @@
     [self presentLoginStoryboard];
 }
 
+- (IBAction)showEditorMode:(UIButton *)sender {
+    [self presentEditorStoryboard];
+}
+
 # pragma mark - TableView datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    // Return the number of sections.
+    if ([self.model count]) {
+        
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        tableView.backgroundView = nil;
+        return 1;
+        
+    } else {
+        
+        // Display a message when the table is empty
+        [self displayMessageOnTableview:tableView];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -90,13 +134,13 @@
     
     // Get data
     DRGScoop *scoop = (DRGScoop *)[self.model objectAtIndex:indexPath.row];
-
+    
     // Custom Cell
-    DRGScoopCell *cell = [tableView dequeueReusableCellWithIdentifier:[DRGScoopCell cellId]];
+    DRGPublishedCell *cell = [tableView dequeueReusableCellWithIdentifier:[DRGPublishedCell cellId]];
     if(cell == nil) {
-        cell = [[DRGScoopCell alloc] init];
+        cell = [[DRGPublishedCell alloc] init];
     }
-        
+    
     // Configure the cell...
     [cell configure:scoop];
     
@@ -104,28 +148,67 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [DRGScoopCell height];
+    return [DRGPublishedCell height];
 }
 
-#pragma mark - API
+#pragma mark - Helpers
 
-- (void)fetchCurrentUserInfo {
-    [[DRGAzureManager sharedInstance].client invokeAPI:@"getCurrentUserInfo"
-                                                  body:nil
-                                            HTTPMethod:@"GET"
-                                            parameters:nil
-                                               headers:nil
-                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                                
-                                                if (error) {
-                                                    NSLog(@"Error -->> %@", error.localizedDescription);
-                                                    [self showAlertWithMessage:error.localizedDescription];
-                                                }
-                                                
-                                                NSLog(@"getCurrentUserInfo ->> %@", result);
-                                                self.reader = [DRGReader readerFromFacebook:result];
-                                                NSLog(@"Reader -->> %@", self.reader);
-                                            }];
+- (void)fetchScoops {
+    
+    [self.refreshControl beginRefreshing];
+
+    [[DRGAzureManager sharedInstance] fetchAvailableScoopsWithCompletion:^(NSArray *result, NSError *error) {
+        self.model = [result mutableCopy];
+        [self reloadData];
+    }];
+    
+    /*
+    MSTable *table = [[DRGAzureManager sharedInstance].client tableWithName:AZURE_TABLE_SCOOPS_KEY];
+    
+    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
+    [queryModel readWithCompletion:^(MSQueryResult *result, NSError *error) {
+        
+        self.model = nil; // reset model
+        
+        for (id item in result.items) {
+            NSLog(@"item -> %@", item);
+            DRGScoop *scoop = [DRGScoop scoopFromDictionary:item];
+            [self.model addObject:scoop];
+        }
+        [self reloadData];
+    }];
+     */
+}
+
+#pragma mark - UIRefreshController
+
+- (void) setupRefreshController {
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(fetchScoops)
+                  forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)reloadData {
+    // Reload table data
+    [self.tableView reloadData];
+    
+    // End the refreshing
+    if (self.refreshControl) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MMM d, h:mm a"];
+        NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                    forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+        self.refreshControl.attributedTitle = attributedTitle;
+        
+        [self.refreshControl endRefreshing];
+    }
 }
 
 #pragma mark - Navigation
@@ -137,22 +220,11 @@
     [self presentViewController:nextVC animated:YES completion:nil];
 }
 
-#pragma mark - Helpers 
-
-- (void)loadDummyData {
-    
-    DRGScoop *scoop = [[DRGScoop alloc] initWithHeadline:@"My fucking awesome headline\nWith two lines"
-                                                    lead:@"We need a lead"
-                                                    body:@"This will be the body of the scoop."
-                                                  author:@"David Regatos"
-                                                    date:[NSDate date]
-                                                andPhoto:[UIImage imageNamed:@"alejandra.jpg"]];
-    for (int i=0; i<16; i++) {
-        [self.model addObject:scoop];
-    }
-    
-    [self.tableView reloadData];
+- (void)presentEditorStoryboard {
+    // Log in success
+    UIViewController *nextVC = [[UIStoryboard storyboardWithName:@"Editor" bundle:nil] instantiateInitialViewController];
+    nextVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:nextVC animated:YES completion:nil];
 }
-
 
 @end

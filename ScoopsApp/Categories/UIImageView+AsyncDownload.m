@@ -14,12 +14,12 @@
     
     UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityView.hidesWhenStopped = YES;
-    activityView.center = self.center;
+    activityView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     [self addSubview:activityView];
+    [activityView startAnimating];
     
     //download the image in background
     dispatch_queue_t download = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    [activityView startAnimating];
     dispatch_async(download, ^{
         NSData *imageData = [NSData dataWithContentsOfURL:url];
         

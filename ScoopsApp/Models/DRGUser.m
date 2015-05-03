@@ -6,25 +6,35 @@
 //  Copyright (c) 2015 DRG. All rights reserved.
 //
 
-#import "DRGReader.h"
+#import "DRGUser.h"
 
-@implementation DRGReader
+/* JSON Properties */
+#define ID      @"id"
+#define NAME    @"name"
+#define EMAIL   @"email"
+#define GENDER  @"gender"
+#define PHOTO1  @"picture"
+#define PHOTO2  @"data"
+#define PHOTO3  @"url"
+
+
+@implementation DRGUser
 
 #pragma mark - Init
 
-+ (instancetype)readerFromFacebook:(NSDictionary *)fbDic {
-    return [[self alloc] initReaderFromFacebook:fbDic];
++ (instancetype)userFromFacebook:(NSDictionary *)fbDic {
+    return [[self alloc] initUserFromFacebook:fbDic];
 }
 
-- (instancetype)initReaderFromFacebook:(NSDictionary *)fbDic {
+- (instancetype)initUserFromFacebook:(NSDictionary *)fbDic {
     
     if (self = [super init]) {
-        _fbID = fbDic[@"id"] ? fbDic[@"id"] : @"";
-        _name = fbDic[@"name"] ? fbDic[@"name"] : @"";
-        _email = fbDic[@"email"] ? fbDic[@"email"] : @"";
-        _gender = fbDic[@"gender"] ? fbDic[@"gender"] : @"";
+        _fbID = fbDic[ID] ? fbDic[ID] : @"";
+        _name = fbDic[NAME] ? fbDic[NAME] : @"";
+        _email = fbDic[EMAIL] ? fbDic[EMAIL] : @"";
+        _gender = fbDic[GENDER] ? fbDic[GENDER] : @"";
         // picture url
-        NSString *pictureURLStr = fbDic[@"picture"][@"data"][@"url"];
+        NSString *pictureURLStr = fbDic[PHOTO1][PHOTO2][PHOTO3];
         if (pictureURLStr && ![pictureURLStr isEqualToString:@""]) {
             _pictureURL = [NSURL URLWithString:pictureURLStr];
         }
@@ -41,8 +51,8 @@
 
 - (BOOL)isEqual:(id)object {
     
-    if ([object isKindOfClass:[DRGReader class]]) {
-        return [self.fbID isEqualToString:((DRGReader *)object).fbID];
+    if ([object isKindOfClass:[DRGUser class]]) {
+        return [self.fbID isEqualToString:((DRGUser *)object).fbID];
     }
     
     return [super isEqual:object];

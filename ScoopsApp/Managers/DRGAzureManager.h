@@ -8,6 +8,9 @@
 
 @import Foundation;
 
+@class DRGScoop;
+@class DRGUser;
+
 #import "AzureKeys.h"
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 
@@ -24,6 +27,27 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 + (instancetype)sharedInstance;
 
 @property (nonatomic, readonly) MSClient *client;
+
+#pragma mark - Connection
+
+/** Returns an array of DRGScoop objects with published property = YES */
+- (void)fetchAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+
+- (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock;
+
+/** Returns an array of DRGScoop objects with published property = YES and authorID = current user */
+- (void)fetchCurrentUserPublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+
+/** Returns an array of DRGScoop objects with published property = NO and authorID = current user */
+- (void)fetchCurrentUserUnpublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+
+- (void)uploadScoop:(DRGScoop *)newScoop
+     withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;
+
+- (void)updateScoop:(DRGScoop *)updatedScoop
+     withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;
+
+#pragma mark - Persistance
 
 - (BOOL)loadUserAuthInfo;
 - (void)saveAuthInfo;

@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 DRG. All rights reserved.
 //
 
-#import "DRGScoopCell.h"
+#import "DRGPublishedCell.h"
 #import "DRGScoop.h"
 #import "UIImageView+AsyncDownload.h"
 
 @class DRGScoop;
 
-@implementation DRGScoopCell
+@implementation DRGPublishedCell
 
 + (CGFloat) height {
-    return 90;
+    return 120;
 }
 
 + (NSString *)cellId {
@@ -26,11 +26,11 @@
     // Initialization code
     self.backgroundColor = [UIColor clearColor];
     
-    self.photoImageView.backgroundColor = [UIColor colorWithWhite:0.93 alpha:1.];
+    self.photoImageView.backgroundColor = [UIColor colorWithWhite:0.2 alpha:1.];
     self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoImageView.clipsToBounds = YES;
     
-    self.headlineLbl.numberOfLines = 2;
+    self.headlineLbl.numberOfLines = 3;
 }
 
 - (void)prepareForReuse{
@@ -41,13 +41,13 @@
 
 - (void)configure:(DRGScoop *)scoop {
     self.headlineLbl.text = scoop.headline;
-    self.authorLbl.text = scoop.author;
+    self.authorLbl.text = scoop.authorName;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = NSDateFormatterShortStyle;
     self.createdAtLbl.text = [formatter stringFromDate:scoop.createdAt];
     
-//    [self.photoImageView asyncDownloadFromURL:scoop.photoURL];
+//    [self.photoImageView asyncDownloadFromURL:[NSURL URLWithString:@"http://www.zastavki.com/pictures/1920x1200/2011/Space_Huge_explosion_031412_.jpg"]];
     self.photoImageView.image = scoop.photo;
 }
 

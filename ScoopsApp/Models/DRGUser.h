@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-@interface DRGReader : NSObject
+@interface DRGUser : NSObject
 
 @property (nonatomic, copy) NSString *fbID;
 @property (nonatomic, copy) NSString *name;
@@ -16,8 +16,8 @@
 @property (nonatomic, copy) NSString *gender;
 @property (nonatomic, copy) NSURL *pictureURL;
 
-+ (instancetype)readerFromFacebook:(NSDictionary *)fbDic;
++ (instancetype)userFromFacebook:(NSDictionary *)fbDic;
 
-- (instancetype)initReaderFromFacebook:(NSDictionary *)fbDic;
+- (instancetype)initUserFromFacebook:(NSDictionary *)fbDic;
 
 @end
