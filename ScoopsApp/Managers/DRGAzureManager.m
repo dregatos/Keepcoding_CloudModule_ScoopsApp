@@ -62,7 +62,7 @@ NSString * const tokenFBKey = @"tokenFB";
                                                         if (scoop) { [mArr addObject:scoop]; }
                                                     }
                                                 }
-                                                completionBlock([mArr copy],error);
+                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
                                             }];
 }
 
@@ -81,7 +81,7 @@ NSString * const tokenFBKey = @"tokenFB";
                                                         if (scoop) { [mArr addObject:scoop]; }
                                                     }
                                                 }
-                                                completionBlock([mArr copy],error);
+                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
                                             }];
 }
 
@@ -100,7 +100,7 @@ NSString * const tokenFBKey = @"tokenFB";
                                                         if (scoop) { [mArr addObject:scoop]; }
                                                     }
                                                 }
-                                                completionBlock([mArr copy],error);
+                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
                                             }];
 }
 
@@ -174,5 +174,14 @@ NSString * const tokenFBKey = @"tokenFB";
                                              forKey:tokenFBKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
+
+#pragma mark - Utils
+
+- (NSArray *)sortedScoopArrayByPublicationDate:(NSMutableArray *)scoopArr {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
+    NSArray *orderedArray = [scoopArr sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    return orderedArray;
+}
+
 
 @end

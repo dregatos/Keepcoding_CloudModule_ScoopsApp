@@ -16,7 +16,7 @@
 #define BODY        @"body"
 #define AUTHORID    @"authorId"
 #define AUTHORNAME  @"authorname"
-#define CREATEDAT   @"createdAt"
+#define CREATEDAT   @"__createdAt"
 #define PUBLISHED   @"published"
 
 @interface DRGScoop ()
@@ -53,13 +53,7 @@
         _authorId = dict[AUTHORID] ? dict[AUTHORID] : @"";
         _authorName = dict[AUTHORNAME] ? dict[AUTHORNAME] : @"";
         _published = [dict[PUBLISHED] integerValue] == 1 ? YES : NO;
-        
-        NSString *dateString = dict[CREATEDAT] ? dict[CREATEDAT] : @"";
-        if (![NSString isEmpty:dateString]) {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-            _createdAt = [dateFormatter dateFromString:dateString];
-        }
+        _createdAt = dict[CREATEDAT]; // ? dict[CREATEDAT] : @"";
     }
     
     return self;
