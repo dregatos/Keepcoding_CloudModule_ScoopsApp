@@ -7,6 +7,7 @@
 //
 
 #import "DRGScoopsVC.h"
+#import "DRGScoopDetailVC.h"
 #import "DRGAzureManager.h"
 #import "DRGScoop.h"
 #import "DRGPublishedCell.h"
@@ -133,7 +134,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Get data
-    DRGScoop *scoop = (DRGScoop *)[self.model objectAtIndex:indexPath.row];
+    DRGScoop *scoop = [self getScoopForIndexPath:indexPath];
     
     // Custom Cell
     DRGPublishedCell *cell = [tableView dequeueReusableCellWithIdentifier:[DRGPublishedCell cellId]];
@@ -145,6 +146,18 @@
     [cell configure:scoop];
     
     return cell;
+}
+
+# pragma mark - TableView delegates
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // Get data
+    DRGScoop *scoop = [self getScoopForIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -180,6 +193,10 @@
      */
 }
 
+- (DRGScoop *)getScoopForIndexPath:(NSIndexPath *)indexPath {
+    return [self.model objectAtIndex:indexPath.row];
+}
+
 #pragma mark - UIRefreshController
 
 - (void) setupRefreshController {
@@ -212,6 +229,15 @@
 }
 
 #pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showScoopDetailVC"]) {
+        DRGScoopDetailVC *nextVC = (DRGScoopDetailVC *)[segue destinationViewController];
+        nextVC.scoop = (DRGScoop *)sender;
+    }
+}
 
 - (void)presentLoginStoryboard {
     // Log in success

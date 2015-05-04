@@ -202,7 +202,7 @@
     // Get data
     DRGScoop *scoop = (DRGScoop *)[[self modelForCurrentSegmentedControl] objectAtIndex:indexPath.row];
     
-    [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
+    [self performSegueWithIdentifier:@"showScoopEditorVC" sender:scoop];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -225,7 +225,7 @@
         DRGNewScoopVC *nextVC = (DRGNewScoopVC *)[segue destinationViewController];
         nextVC.scoop = nil;
         nextVC.user = self.user;
-    } else if ([segue.identifier isEqualToString:@"showScoopDetailVC"]) {
+    } else if ([segue.identifier isEqualToString:@"showScoopEditorVC"]) {
         DRGNewScoopVC *nextVC = (DRGNewScoopVC *)[segue destinationViewController];
         nextVC.scoop = (DRGScoop *)sender;
         nextVC.user = self.user;

@@ -131,7 +131,7 @@
                     <connections>
                         <outlet property="segmentedControl" destination="STO-Hq-qae" id="40o-bx-BP6"/>
                         <outlet property="tableView" destination="a8e-3a-mIG" id="MzJ-NQ-Ba9"/>
-                        <segue destination="Zgv-Uz-1qy" kind="custom" identifier="showScoopDetailVC" customClass="DRGPresentRightToLeftSegue" id="bll-ae-sTY"/>
+                        <segue destination="Zgv-Uz-1qy" kind="custom" identifier="showScoopEditorVC" customClass="DRGPresentRightToLeftSegue" id="bll-ae-sTY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEl-B0-hm6" sceneMemberID="firstResponder"/>
@@ -338,14 +338,14 @@
                                     <constraint firstAttribute="width" id="mY8-0m-Iim"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem style="done" systemItem="cancel" id="sst-Xh-Dd6">
-                                        <connections>
-                                            <action selector="cancenBtnPressed:" destination="Zgv-Uz-1qy" id="Wd2-tg-GJp"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem systemItem="save" id="hU6-hh-mdL">
                                         <connections>
                                             <action selector="saveBtnPressed:" destination="Zgv-Uz-1qy" id="PLl-WJ-L8b"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="done" systemItem="cancel" id="sst-Xh-Dd6">
+                                        <connections>
+                                            <action selector="cancenBtnPressed:" destination="Zgv-Uz-1qy" id="Wd2-tg-GJp"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="emy-id-Tdz"/>

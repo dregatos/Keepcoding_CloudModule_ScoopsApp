@@ -71,7 +71,7 @@
                                       body:body
                                   authorId:@""
                                 authorName:authorName
-                                 published:[NSNumber numberWithBool:NO]];
+                                 published:NO];
 }
 
 - (instancetype)initWithHeadline:(NSString *)headline

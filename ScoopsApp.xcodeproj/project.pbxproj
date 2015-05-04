@@ -30,6 +30,7 @@
 		0798FAB31AF75E4100FF7344 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB21AF75E4100FF7344 /* NSString+Validation.m */; };
 		0798FAB91AF7742000FF7344 /* DRGPresentRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB61AF7742000FF7344 /* DRGPresentRightToLeftSegue.m */; };
 		0798FABA1AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB81AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m */; };
+		0798FABD1AF79DC200FF7344 /* DRGScoopDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FABC1AF79DC200FF7344 /* DRGScoopDetailVC.m */; };
 		07C76A331AF6A41E00EF0B3C /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C76A2E1AF6A41E00EF0B3C /* UIImage+Alpha.m */; };
 		07C76A341AF6A41E00EF0B3C /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C76A301AF6A41E00EF0B3C /* UIImage+Resize.m */; };
 		07C76A351AF6A41E00EF0B3C /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C76A321AF6A41E00EF0B3C /* UIImage+RoundedCorner.m */; };
@@ -88,6 +89,8 @@
 		0798FAB61AF7742000FF7344 /* DRGPresentRightToLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGPresentRightToLeftSegue.m; sourceTree = "<group>"; };
 		0798FAB71AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGUnwindPresentRightToLeftSegue.h; sourceTree = "<group>"; };
 		0798FAB81AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGUnwindPresentRightToLeftSegue.m; sourceTree = "<group>"; };
+		0798FABB1AF79DC200FF7344 /* DRGScoopDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGScoopDetailVC.h; sourceTree = "<group>"; };
+		0798FABC1AF79DC200FF7344 /* DRGScoopDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGScoopDetailVC.m; sourceTree = "<group>"; };
 		07C76A2D1AF6A41E00EF0B3C /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		07C76A2E1AF6A41E00EF0B3C /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		07C76A2F1AF6A41E00EF0B3C /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 			children = (
 				070C4E941AEFC75900D418DB /* DRGScoopsVC.h */,
 				070C4E951AEFC75900D418DB /* DRGScoopsVC.m */,
+				0798FABB1AF79DC200FF7344 /* DRGScoopDetailVC.h */,
+				0798FABC1AF79DC200FF7344 /* DRGScoopDetailVC.m */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -407,6 +412,7 @@
 				070C4E961AEFC75900D418DB /* DRGScoopsVC.m in Sources */,
 				070C4E471AEE4B9D00D418DB /* DRGUser.m in Sources */,
 				070C4E4A1AEE705F00D418DB /* DRGScoopsEditorVC.m in Sources */,
+				0798FABD1AF79DC200FF7344 /* DRGScoopDetailVC.m in Sources */,
 				0798FABA1AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m in Sources */,
 				07C76A331AF6A41E00EF0B3C /* UIImage+Alpha.m in Sources */,
 				0798FAB31AF75E4100FF7344 /* NSString+Validation.m in Sources */,

@@ -30,10 +30,10 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 
 #pragma mark - Connection
 
+- (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock;
+
 /** Returns an array of DRGScoop objects with published property = YES */
 - (void)fetchAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
-
-- (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock;
 
 /** Returns an array of DRGScoop objects with published property = YES and authorID = current user */
 - (void)fetchCurrentUserPublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
