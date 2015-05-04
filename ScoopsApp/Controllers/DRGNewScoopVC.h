@@ -16,7 +16,7 @@
 @property (nonatomic, strong) DRGScoop *scoop;
 @property (nonatomic, strong) DRGUser *user;
 
-// IBOutlet
+// IBOutlets
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIControl *topContainer;
 @property (weak, nonatomic) IBOutlet UITextField *authorTextField;
@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *headlineTextView;
 @property (weak, nonatomic) IBOutlet UITextView *leadTextView;
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
+
 
 // Autolayout
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightTopContainerViewConstrain;

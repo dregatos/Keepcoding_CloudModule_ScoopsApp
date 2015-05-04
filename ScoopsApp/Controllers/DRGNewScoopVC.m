@@ -168,31 +168,63 @@
 - (IBAction)saveBtnPressed:(id)sender {
     
     if (!self.scoop) {
+        // Create new scoop
         self.scoop = [DRGScoop scoopWithHeadline:self.headlineTextView.text
                                             lead:self.leadTextView.text
                                             body:self.bodyTextView.text
-                                        authorId:nil
-                                      authorName:self.authorTextField.text
-                                       published:self.publishSwitch.on];
+                                      authorName:self.authorTextField.text];
+        
+        [[DRGAzureManager sharedInstance] uploadScoop:self.scoop
+                                       withCompletion:^(DRGScoop *scoop, NSError *error) {
+                                           if (error) {
+                                               [self showAlertWithMessage:error.localizedDescription];
+                                           } else if (!scoop) {
+                                               [self showAlertWithMessage:@"Houston, we had a problem!!"];
+                                           } else {
+                                               // If upload success, then check publish FLAG
+                                               if (!self.publishSwitch.on) {
+                                                   [self dismissViewControllerAnimated:YES completion:nil];
+                                                   return;
+                                               }
+                                               
+                                               // User wants to publish this scoop
+                                               [self publishCurrentScoop:scoop];
+                                           }
+                                       }];
     } else {
+        // update current scoop
         self.scoop.authorName = self.authorTextField.text;
         self.scoop.headline = self.headlineTextView.text;
         self.scoop.lead = self.leadTextView.text;
         self.scoop.body = self.bodyTextView.text;
         self.scoop.published = self.publishSwitch.on;
+        [[DRGAzureManager sharedInstance] updateScoop:self.scoop
+                                       withCompletion:^(DRGScoop *scoop, NSError *error) {
+                                           if (error) {
+                                               [self showAlertWithMessage:error.localizedDescription];
+                                           } else if (!scoop) {
+                                               [self showAlertWithMessage:@"Houston, we had a problem!!"];
+                                           } else {
+                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                           }
+                                       }];
     }
+}
+
+- (void)publishCurrentScoop:(DRGScoop *)scoop {
     
-    [[DRGAzureManager sharedInstance] uploadScoop:self.scoop withCompletion:^(DRGScoop *scoop, NSError *error) {
-        if (error) {
-            [self showAlertWithMessage:error.localizedDescription];
-        } else if (!scoop) {
-            [self showAlertWithMessage:@"Houston, we had a problem!!"];
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-        
-        //[self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    }];
+    scoop.published = YES;
+    
+    [[DRGAzureManager sharedInstance] updateScoop:scoop
+                                   withCompletion:^(DRGScoop *scoop, NSError *error) {
+                                       if (error) {
+                                           [self showAlertWithMessage:error.localizedDescription];
+                                       } else if (!scoop) {
+                                           [self showAlertWithMessage:@"Houston, we had a problem!!"];
+                                       } else {
+                                           [self dismissViewControllerAnimated:YES completion:nil];
+                                       }
+                                   }];
 }
 
 - (IBAction)photoImageTapped:(UITapGestureRecognizer *)sender {
@@ -334,6 +366,9 @@
     self.headlineTextView.text = self.scoop.headline;
     self.leadTextView.text = self.scoop.lead;
     self.bodyTextView.text = self.scoop.body;
+    
+    self.publishSwitch.on = self.scoop.published;
+    
     self.photoImageView.clipsToBounds = YES;
     self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
     if (self.scoop.photo) {

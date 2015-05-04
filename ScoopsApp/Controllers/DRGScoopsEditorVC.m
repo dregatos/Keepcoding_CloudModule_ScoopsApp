@@ -73,32 +73,33 @@
     self.tableView.delegate = self;
     
     [self setupNavBar];
-    
-//    [self loadDummyData];
-    [self fetchScoops];
-//    [self addNewsToAzure];
+    [self setupSegmentedController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // set up SegmentedController
-//    self.mySegmentedController.tag = …;
-//    self.mySegmentedController.tintColor = …;
-    [self.segmentedControl setTitle:@"Published" forSegmentAtIndex:PUBLISHED_SELECTED];
-    [self.segmentedControl setTitle:@"Unpublished" forSegmentAtIndex:UNPUBLISHED_SELECTED];
-
-    self.segmentedControl.selectedSegmentIndex = PUBLISHED_SELECTED;
-    
-    [self.segmentedControl addTarget:self
-                              action:@selector(segmentedChanged:)
-                    forControlEvents:UIControlEventValueChanged];
+    [self fetchScoops];
 }
 
 #pragma mark - Segmented Controller
     
 - (void)segmentedChanged:(UISegmentedControl *)sender {
     [self fetchScoops];
+}
+
+- (void)setupSegmentedController {
+    // set up SegmentedController
+    //    self.mySegmentedController.tag = …;
+    //    self.mySegmentedController.tintColor = …;
+    [self.segmentedControl setTitle:@"Published" forSegmentAtIndex:PUBLISHED_SELECTED];
+    [self.segmentedControl setTitle:@"Unpublished" forSegmentAtIndex:UNPUBLISHED_SELECTED];
+    
+    self.segmentedControl.selectedSegmentIndex = PUBLISHED_SELECTED;
+    
+    [self.segmentedControl addTarget:self
+                              action:@selector(segmentedChanged:)
+                    forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - Appearance
@@ -192,6 +193,18 @@
     return cell;
 }
 
+# pragma mark - TableView delegates
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // Get data
+    DRGScoop *scoop = (DRGScoop *)[[self modelForCurrentSegmentedControl] objectAtIndex:indexPath.row];
+    
+    [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [DRGPublishedCell height];
 }
@@ -212,13 +225,16 @@
         DRGNewScoopVC *nextVC = (DRGNewScoopVC *)[segue destinationViewController];
         nextVC.scoop = nil;
         nextVC.user = self.user;
+    } else if ([segue.identifier isEqualToString:@"showScoopDetailVC"]) {
+        DRGNewScoopVC *nextVC = (DRGNewScoopVC *)[segue destinationViewController];
+        nextVC.scoop = (DRGScoop *)sender;
+        nextVC.user = self.user;
     }
 }
 
 #pragma mark - Helpers 
 
 - (void)fetchScoops {
-    
     if (self.segmentedControl.selectedSegmentIndex == 1) {
         [[DRGAzureManager sharedInstance] fetchCurrentUserUnpublishedWithCompletion:^(NSArray *result, NSError *error) {
             self.unpublished = [result mutableCopy];

@@ -138,7 +138,6 @@ NSString * const tokenFBKey = @"tokenFB";
                                             }];
 }
 
-
 #pragma mark - User persistance
 
 - (BOOL)loadUserAuthInfo {

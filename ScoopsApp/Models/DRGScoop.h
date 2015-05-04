@@ -41,9 +41,7 @@
 + (instancetype)scoopWithHeadline:(NSString *)headline
                              lead:(NSString *)lead
                              body:(NSString *)body
-                         authorId:(NSString *)authorId
-                       authorName:(NSString *)authorName
-                        published:(BOOL)published;
+                       authorName:(NSString *)authorName;
 
 - (instancetype)initWithHeadline:(NSString *)headline
                             lead:(NSString *)lead

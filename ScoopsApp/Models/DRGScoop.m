@@ -7,6 +7,7 @@
 //
 
 #import "DRGScoop.h"
+#import "NSString+Validation.h"
 
 // JSON
 #define ID          @"id"
@@ -51,7 +52,14 @@
         _body = dict[BODY] ? dict[BODY] : @"";
         _authorId = dict[AUTHORID] ? dict[AUTHORID] : @"";
         _authorName = dict[AUTHORNAME] ? dict[AUTHORNAME] : @"";
-        _published = dict[PUBLISHED];
+        _published = [dict[PUBLISHED] integerValue] == 1 ? YES : NO;
+        
+        NSString *dateString = dict[CREATEDAT] ? dict[CREATEDAT] : @"";
+        if (![NSString isEmpty:dateString]) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+            _createdAt = [dateFormatter dateFromString:dateString];
+        }
     }
     
     return self;
@@ -62,17 +70,14 @@
 + (instancetype)scoopWithHeadline:(NSString *)headline
                              lead:(NSString *)lead
                              body:(NSString *)body
-                         authorId:(NSString *)authorId
-                       authorName:(NSString *)authorName
-                        published:(BOOL)published {
+                       authorName:(NSString *)authorName {
     
     return  [[self alloc] initWithHeadline:headline
                                       lead:lead
                                       body:body
-                                  authorId:authorId
+                                  authorId:@""
                                 authorName:authorName
-                                 published:published];
-    
+                                 published:[NSNumber numberWithBool:NO]];
 }
 
 - (instancetype)initWithHeadline:(NSString *)headline
