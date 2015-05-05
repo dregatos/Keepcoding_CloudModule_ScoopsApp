@@ -26,7 +26,6 @@
 		074F67A31AED50CD009FABEC /* DRGLoginPortalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67A21AED50CD009FABEC /* DRGLoginPortalVC.m */; };
 		074F67A61AED510E009FABEC /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074F67A41AED510E009FABEC /* Login.storyboard */; };
 		074F67AA1AED5751009FABEC /* DRGAzureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67A91AED5751009FABEC /* DRGAzureManager.m */; };
-		0784B6361AF6A200006E54C6 /* image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0784B6351AF6A200006E54C6 /* image_placeholder.png */; };
 		0798FAB31AF75E4100FF7344 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB21AF75E4100FF7344 /* NSString+Validation.m */; };
 		0798FAB91AF7742000FF7344 /* DRGPresentRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB61AF7742000FF7344 /* DRGPresentRightToLeftSegue.m */; };
 		0798FABA1AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0798FAB81AF7742000FF7344 /* DRGUnwindPresentRightToLeftSegue.m */; };
@@ -82,7 +81,6 @@
 		074F67A81AED5751009FABEC /* DRGAzureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGAzureManager.h; sourceTree = "<group>"; };
 		074F67A91AED5751009FABEC /* DRGAzureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGAzureManager.m; sourceTree = "<group>"; };
 		074F67AB1AED5A6A009FABEC /* AzureKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AzureKeys.h; sourceTree = "<group>"; };
-		0784B6351AF6A200006E54C6 /* image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_placeholder.png; sourceTree = "<group>"; };
 		0798FAB11AF75E4100FF7344 /* NSString+Validation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validation.h"; sourceTree = "<group>"; };
 		0798FAB21AF75E4100FF7344 /* NSString+Validation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Validation.m"; sourceTree = "<group>"; };
 		0798FAB51AF7742000FF7344 /* DRGPresentRightToLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGPresentRightToLeftSegue.h; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 		074F67741AED3977009FABEC /* ScoopsApp */ = {
 			isa = PBXGroup;
 			children = (
-				0784B6351AF6A200006E54C6 /* image_placeholder.png */,
 				074F67791AED3977009FABEC /* AppDelegate.h */,
 				074F677A1AED3977009FABEC /* AppDelegate.m */,
 				074F67821AED3977009FABEC /* Images.xcassets */,
@@ -378,7 +375,6 @@
 				074F67A61AED510E009FABEC /* Login.storyboard in Resources */,
 				070C4E901AEFC51700D418DB /* Editor.storyboard in Resources */,
 				074F67811AED3977009FABEC /* Main.storyboard in Resources */,
-				0784B6361AF6A200006E54C6 /* image_placeholder.png in Resources */,
 				074F67861AED3977009FABEC /* LaunchScreen.xib in Resources */,
 				074F67831AED3977009FABEC /* Images.xcassets in Resources */,
 			);

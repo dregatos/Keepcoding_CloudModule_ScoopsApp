@@ -59,8 +59,8 @@
 }
 
 - (void)updateScrollViewLayout {
-    self.heightHeadlineConstrain.constant = [self heightThatFitSizeOfContent:self.headlineLbl];
-    self.heightScoopTextConstrain.constant = [self heightThatFitSizeOfContent:self.scoopTextView];
+//    self.heightHeadlineConstrain.constant = [self heightThatFitSizeOfContent:self.headlineLbl];
+//    self.heightScoopTextConstrain.constant = [self heightThatFitSizeOfContent:self.scoopTextView];
     
     CGFloat calculatedHeight = [self heightThatFitSizeOfContent:self.headlineLbl] + [self heightThatFitSizeOfContent:self.scoopTextView] + 100;
     
@@ -72,15 +72,5 @@
     
     return viewSize.height;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "DRGAzureManager.h"
 
-#import "DRGScoop.h"
-
 @interface AppDelegate ()
 
 @end

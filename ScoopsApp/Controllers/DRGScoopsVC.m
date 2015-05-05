@@ -52,12 +52,12 @@
     
     [self setupRefreshController];
     [self setupNavBar];
-    [self fetchScoops];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self fetchScoops];
 }
 
 #pragma mark - Appearance 

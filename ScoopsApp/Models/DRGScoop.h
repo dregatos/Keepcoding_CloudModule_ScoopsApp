@@ -12,15 +12,16 @@
 
 @interface DRGScoop : NSObject
 
-@property (nonatomic, copy) NSString *scoopID;      // Assigned by the server after inserting a new scoop
+// Unmutable
+@property (nonatomic, readonly) NSString *scoopID;
+@property (nonatomic, readonly) NSString *authorId;
+@property (nonatomic, readonly) CLLocationCoordinate2D location;
+@property (nonatomic, readonly) NSDate *createdAt;
+
 @property (nonatomic, copy) NSString *headline;
 @property (nonatomic, copy) NSString *lead;
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *authorName;
-@property (nonatomic, readonly) NSString *authorId;
-
-@property (nonatomic, readonly) CLLocationCoordinate2D location;
-@property (nonatomic, strong) NSDate *createdAt;
 
 @property (nonatomic, strong) UIImage *photo;
 @property (nonatomic, strong) NSURL *photoURL;

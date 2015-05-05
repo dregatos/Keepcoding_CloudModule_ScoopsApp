@@ -22,6 +22,9 @@
 @interface DRGScoop ()
 
 @property (nonatomic, readwrite) NSString *authorId;
+@property (nonatomic, readwrite) NSString *scoopID;
+@property (nonatomic, readwrite) CLLocationCoordinate2D location;
+@property (nonatomic, readwrite) NSDate *createdAt;
 
 @end
 
