@@ -32,14 +32,19 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 
 - (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock;
 
-/** Returns an array of DRGScoop objects with published property = YES */
-- (void)fetchAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+/** Returns an array of published DRGScoop objects with their whole properties*/
+- (void)fetchFullInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
 
-/** Returns an array of DRGScoop objects with published property = YES and authorID = current user */
+/** Returns an array of published DRGScoop objects with their whole properties*/
+- (void)fetchBasicInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+
+/** Returns an array of published DRGScoop objects with authorID = current user */
 - (void)fetchCurrentUserPublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
 
-/** Returns an array of DRGScoop objects with published property = NO and authorID = current user */
+/** Returns an array of unpublished DRGScoop objects with authorID = current user */
 - (void)fetchCurrentUserUnpublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
+
+- (void)fetchScoop:(DRGScoop *)scoop withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;
 
 - (void)insertScoop:(DRGScoop *)newScoop
      withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;

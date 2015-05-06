@@ -52,12 +52,12 @@
     
     [self setupRefreshController];
     [self setupNavBar];
+    [self fetchScoops];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self fetchScoops];
 }
 
 #pragma mark - Appearance 
@@ -155,9 +155,21 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // Get data
-    DRGScoop *scoop = [self getScoopForIndexPath:indexPath];
+    DRGScoop *selectedScoop = [self getScoopForIndexPath:indexPath];
     
-    [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
+    [[DRGAzureManager sharedInstance] fetchScoop:selectedScoop withCompletion:^(DRGScoop *scoop, NSError *error) {
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            return;
+        }
+        
+        [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -169,28 +181,12 @@
 - (void)fetchScoops {
     
     [self.refreshControl beginRefreshing];
-
-    [[DRGAzureManager sharedInstance] fetchAvailableScoopsWithCompletion:^(NSArray *result, NSError *error) {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    [[DRGAzureManager sharedInstance] fetchBasicInfoOfAvailableScoopsWithCompletion:^(NSArray *result, NSError *error) {
         self.model = [result mutableCopy];
         [self reloadData];
     }];
-    
-    /*
-    MSTable *table = [[DRGAzureManager sharedInstance].client tableWithName:AZURE_TABLE_SCOOPS_KEY];
-    
-    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
-    [queryModel readWithCompletion:^(MSQueryResult *result, NSError *error) {
-        
-        self.model = nil; // reset model
-        
-        for (id item in result.items) {
-            NSLog(@"item -> %@", item);
-            DRGScoop *scoop = [DRGScoop scoopFromDictionary:item];
-            [self.model addObject:scoop];
-        }
-        [self reloadData];
-    }];
-     */
 }
 
 - (DRGScoop *)getScoopForIndexPath:(NSIndexPath *)indexPath {
@@ -212,6 +208,8 @@
 - (void)reloadData {
     // Reload table data
     [self.tableView reloadData];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     // End the refreshing
     if (self.refreshControl) {

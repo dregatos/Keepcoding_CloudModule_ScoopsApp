@@ -59,7 +59,8 @@ NSString * const tokenFBKey = @"tokenFB";
                                             }];
 }
 
-- (void)fetchAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+- (void)fetchFullInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    
     [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
                                                   body:nil
                                             HTTPMethod:@"GET"
@@ -75,6 +76,57 @@ NSString * const tokenFBKey = @"tokenFB";
                                                     }
                                                 }
                                                 completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
+                                            }];
+}
+
+- (void)fetchBasicInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    
+    NSDictionary *parameters = @{@"info" : @"basic"};
+    
+    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:parameters
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
+                                            }];
+}
+
+- (void)fetchScoop:(DRGScoop *)scoop withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock {
+    
+    NSDictionary *parameters = @{@"scoopID" : scoop.scoopID};
+
+    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:parameters
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                
+                                                if ([mArr count] > 1) {
+                                                    // Error - more than one scoop with same id
+                                                    // TODO - create custom error
+                                                    completionBlock(nil, error);
+                                                }
+                                                
+                                                completionBlock([mArr firstObject],error);
                                             }];
 }
 

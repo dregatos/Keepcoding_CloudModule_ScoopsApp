@@ -269,13 +269,17 @@
 #pragma mark - Helpers 
 
 - (void)fetchScoops {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
     if (self.segmentedControl.selectedSegmentIndex == UNPUBLISHED_SELECTED) {
         [[DRGAzureManager sharedInstance] fetchCurrentUserUnpublishedWithCompletion:^(NSArray *result, NSError *error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             self.unpublished = [result mutableCopy];
             [self.tableView reloadData];
         }];
     } else if (self.segmentedControl.selectedSegmentIndex == PUBLISHED_SELECTED) {
         [[DRGAzureManager sharedInstance] fetchCurrentUserPublishedWithCompletion:^(NSArray *result, NSError *error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             self.published = [result mutableCopy];
             [self.tableView reloadData];
         }];
