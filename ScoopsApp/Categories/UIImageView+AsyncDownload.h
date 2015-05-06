@@ -10,7 +10,11 @@
 
 @interface UIImageView (AsyncDownload)
 
-- (void)asyncDownloadFromURL:(NSURL *)url;
+- (void)asyncDownloadFromURL:(NSURL *)url andCompletion:(void(^)(UIImage *image))completionBlock;
+
+- (void)asyncDownloadFromURL:(NSURL *)url
+             withPlaceholder:(UIImage *)placeholder
+               andCompletion:(void(^)(UIImage *image))completionBlock;
 
 
 @end

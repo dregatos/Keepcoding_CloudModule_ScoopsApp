@@ -7,6 +7,7 @@
 //
 
 #import "DRGUser.h"
+#import "NSDictionary+Additions.h"
 
 /* JSON Properties */
 #define ID      @"id"
@@ -29,6 +30,9 @@
 - (instancetype)initUserFromFacebook:(NSDictionary *)fbDic {
     
     if (self = [super init]) {
+        
+        fbDic = [fbDic removeNullValues];
+
         _fbID = fbDic[ID] ? fbDic[ID] : @"";
         _name = fbDic[NAME] ? fbDic[NAME] : @"";
         _email = fbDic[EMAIL] ? fbDic[EMAIL] : @"";

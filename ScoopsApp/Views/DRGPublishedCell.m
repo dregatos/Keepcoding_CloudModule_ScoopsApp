@@ -7,6 +7,7 @@
 //
 
 #import "DRGPublishedCell.h"
+#import "DRGAzureManager.h"
 #import "DRGScoop.h"
 #import "UIImageView+AsyncDownload.h"
 
@@ -47,8 +48,20 @@
     formatter.dateStyle = NSDateFormatterShortStyle;
     self.createdAtLbl.text = [formatter stringFromDate:scoop.createdAt];
     
-//    [self.photoImageView asyncDownloadFromURL:[NSURL URLWithString:@"http://www.zastavki.com/pictures/1920x1200/2011/Space_Huge_explosion_031412_.jpg"]];
-    self.photoImageView.image = scoop.photo;
+    // Cell image
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityView.hidesWhenStopped = YES;
+    activityView.center = CGPointMake(self.photoImageView.bounds.size.width/2, self.photoImageView.bounds.size.height/2);
+    [self.photoImageView addSubview:activityView];
+    [activityView startAnimating];
+    [[DRGAzureManager sharedInstance] downloadImageForScoop:scoop
+                                             withCompletion:^(UIImage *image, NSError *error) {
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [activityView stopAnimating];
+                                                     scoop.photo = image;
+                                                     self.photoImageView.image = image;
+                                                 });
+                                             }];
 }
 
 @end

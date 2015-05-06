@@ -12,6 +12,8 @@
 #import "DRGUser.h"
 #import "UIImageView+AsyncDownload.h"
 #import "UIImage+Resize.h"
+#import "NSString+Validation.h"
+#import "NotificationKeys.h"
 
 #define HEADLINE_TAG    100
 #define LEAD_TAG        101
@@ -20,7 +22,8 @@
 #define HEIGHT_TOP_CONTAINER 120
 #define HEIGHT_BAR_BOTTOM    44
 
-@interface DRGNewScoopVC () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface DRGNewScoopVC () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
+                                UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic) float initialHeight;
 
@@ -33,6 +36,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.authorTextField.delegate = self;
+    self.headlineTextView.delegate = self;
+    self.leadTextView.delegate = self;
+    self.bodyTextView.delegate = self;
+
+    if (!self.scoop) {
+        // Create new scoop
+        self.scoop = [DRGScoop scoopWithHeadline:self.headlineTextView.text
+                                            lead:self.leadTextView.text
+                                            body:self.bodyTextView.text
+                                      authorName:self.authorTextField.text];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -48,6 +64,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     [self unregisterForNotifications];   //optionally we can unregister a notification when the view disappears
 }
 
@@ -63,10 +81,10 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(notifyKeyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(notifyKeyboardWillShow:)
+//                                                 name:UIKeyboardWillShowNotification
+//                                               object:nil];
 }
 
 - (void)unregisterForNotifications {
@@ -119,7 +137,8 @@
     
     // Sacar la duración de la animación del teclado
     double duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    [UIView animateWithDuration:duration animations:^{
+    [UIView animateWithDuration:duration == 0 ? 1 : duration
+                     animations:^{
         self.topContainer.alpha = 0;
         [self.view layoutIfNeeded];
     } completion:nil];
@@ -135,7 +154,8 @@
                             objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         [self.view setNeedsLayout];
         [self applyInitialLayout];
-        [UIView animateWithDuration:duration animations:^{
+        [UIView animateWithDuration:duration == 0 ? 1 : duration
+                         animations:^{
             self.topContainer.alpha = 1;
             self.headlineTextView.alpha = 1;
             self.leadTextView.alpha = 1;
@@ -167,64 +187,14 @@
 
 - (IBAction)saveBtnPressed:(id)sender {
     
-    if (!self.scoop) {
-        // Create new scoop
-        self.scoop = [DRGScoop scoopWithHeadline:self.headlineTextView.text
-                                            lead:self.leadTextView.text
-                                            body:self.bodyTextView.text
-                                      authorName:self.authorTextField.text];
-        
-        [[DRGAzureManager sharedInstance] uploadScoop:self.scoop
-                                       withCompletion:^(DRGScoop *scoop, NSError *error) {
-                                           if (error) {
-                                               [self showAlertWithMessage:error.localizedDescription];
-                                           } else if (!scoop) {
-                                               [self showAlertWithMessage:@"Houston, we had a problem!!"];
-                                           } else {
-                                               // If upload success, then check publish FLAG
-                                               if (!self.publishSwitch.on) {
-                                                   [self dismissViewControllerAnimated:YES completion:nil];
-                                                   return;
-                                               }
-                                               
-                                               // User wants to publish this scoop
-                                               [self publishCurrentScoop:scoop];
-                                           }
-                                       }];
-    } else {
-        // update current scoop
-        self.scoop.authorName = self.authorTextField.text;
-        self.scoop.headline = self.headlineTextView.text;
-        self.scoop.lead = self.leadTextView.text;
-        self.scoop.body = self.bodyTextView.text;
-        self.scoop.published = self.publishSwitch.on;
-        [[DRGAzureManager sharedInstance] updateScoop:self.scoop
-                                       withCompletion:^(DRGScoop *scoop, NSError *error) {
-                                           if (error) {
-                                               [self showAlertWithMessage:error.localizedDescription];
-                                           } else if (!scoop) {
-                                               [self showAlertWithMessage:@"Houston, we had a problem!!"];
-                                           } else {
-                                               [self dismissViewControllerAnimated:YES completion:nil];
-                                           }
-                                       }];
-    }
-}
-
-- (void)publishCurrentScoop:(DRGScoop *)scoop {
+    // update current scoop
+    self.scoop.authorName = self.authorTextField.text;
+    self.scoop.headline = self.headlineTextView.text;
+    self.scoop.lead = self.leadTextView.text;
+    self.scoop.body = self.bodyTextView.text;
+    self.scoop.published = self.publishSwitch.on;
     
-    scoop.published = YES;
-    
-    [[DRGAzureManager sharedInstance] updateScoop:scoop
-                                   withCompletion:^(DRGScoop *scoop, NSError *error) {
-                                       if (error) {
-                                           [self showAlertWithMessage:error.localizedDescription];
-                                       } else if (!scoop) {
-                                           [self showAlertWithMessage:@"Houston, we had a problem!!"];
-                                       } else {
-                                           [self dismissViewControllerAnimated:YES completion:nil];
-                                       }
-                                   }];
+    [self saveCurrentScoop];
 }
 
 - (IBAction)photoImageTapped:(UITapGestureRecognizer *)sender {
@@ -240,59 +210,107 @@
     }
 }
 
-#pragma mark - UIImagePickerController
+#pragma mark - Utils
 
-- (void)launchImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+- (void)syncViewAndModel {
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.sourceType = sourceType;
-    picker.delegate = self;
-    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    self.authorTextField.text = self.user.name;
+    if (self.scoop.authorName && ![NSString isEmpty:self.scoop.authorName]) {
+        self.authorTextField.text = self.scoop.authorName;
+    }
+    self.headlineTextView.text = self.scoop.headline;
+    self.leadTextView.text = self.scoop.lead;
+    self.bodyTextView.text = self.scoop.body;
     
-    [self presentViewController:picker
-                       animated:YES
-                     completion:^{
-                         // Cuando termine la animación que muestra el picker
-                         // se ejecutará este bloque.
-                     }];
+    self.publishSwitch.on = self.scoop.published;
+    
+    self.photoImageView.clipsToBounds = YES;
+    self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
+    if (self.photo) {
+        self.photoImageView.image = self.photo;
+    } else if (self.scoop.photo) {
+        self.photoImageView.image = self.scoop.photo;
+    } else {
+        self.photoImageView.image = [UIImage imageNamed:@"image_placeholder"];
+    }
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    __block UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = CGSizeMake(screenBounds.size.height * screenScale, screenBounds.size.width * screenScale);
-    
-//    [self.photoActivityIndicator startAnimating];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        img = [img resizedImage:screenSize interpolationQuality:kCGInterpolationMedium];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.photo = img;
-            self.photoImageView.image = img;
-//            [self.photoActivityIndicator stopAnimating];
-        });
-    });
-    
-    // Ocultar el presented VC
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 // Cuando termine la animación que oculta el picker
-                                 // se ejecutará este bloque.
-                             }];
+- (void)saveCurrentScoop {
+    [self.activityIndicator startAnimating];
+    if (!self.scoop.scoopID) {
+        // Scoop doesn't exist, we must create it
+        [self uploadScoopInfo:self.scoop withCompletion:^(BOOL finished, NSError *error) {
+            [self checkResultWithStatus:finished andError:error];
+        }];
+    } else {
+        // Update scoop info
+        [self updateScoopInfo:self.scoop withCompletion:^(BOOL finished, NSError *error) {
+            [self checkResultWithStatus:finished andError:error];
+        }];
+    }
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    // Ocultar el presented VC
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 // Cuando termine la animación que oculta el picker
-                                 // se ejecutará este bloque.
-                             }];
+- (void)checkResultWithStatus:(BOOL)isFinished andError:(NSError *)error {
+    
+    [self.activityIndicator stopAnimating];
+    
+    if (error) {
+        [self showAlertWithMessage:error.localizedDescription];
+    } else if (isFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SCOOP_WAS_SAVED object:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self showAlertWithMessage:@"UNFINISHED WITH NO ERROR!!!"];
+    }
+}
+
+#pragma mark - Connection
+
+- (void)uploadScoopInfo:(DRGScoop *)aScoop withCompletion:(void(^)(BOOL finished, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance] insertScoop:aScoop
+                                   withCompletion:^(DRGScoop *scoop, NSError *error) {
+        if (error) {
+           completionBlock (NO, error);
+        } else {
+           self.scoop = scoop;  // Update scoop. we need his id
+           if (self.photo) {
+               [[DRGAzureManager sharedInstance] uploadImage:self.photo
+                                                    forScoop:self.scoop
+                                              withCompletion:^(BOOL success, DRGScoop *scoop, NSError *error) {
+                                                  
+                                                  if (success) {
+                                                      self.scoop = scoop;
+                                                  }
+                                                  completionBlock (success, error);
+               }];
+               
+           } else {
+               completionBlock (YES, error);
+           }
+        }
+    }];
+}
+
+- (void)updateScoopInfo:(DRGScoop *)aScoop withCompletion:(void(^)(BOOL finished, NSError *error))completionBlock {
+    [[DRGAzureManager sharedInstance] updateScoop:aScoop
+                                   withCompletion:^(DRGScoop *scoop, NSError *error) {
+        if (error) {
+           completionBlock (NO, error);
+        } else if (self.photo) {
+           [[DRGAzureManager sharedInstance] uploadImage:self.photo
+                                                forScoop:scoop
+                                          withCompletion:^(BOOL success, DRGScoop *scoop, NSError *error) {
+                                              
+                                              if (success) {
+                                                  self.scoop = scoop;
+                                              }
+                                              completionBlock (success, error);
+           }];
+            
+        } else {
+           completionBlock (YES, error);
+        }
+    }];
 }
 
 #pragma mark - Alert controller
@@ -359,36 +377,87 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-#pragma mark - Utils
+#pragma mark - UIImagePickerController
 
-- (void)syncViewAndModel {
-    self.authorTextField.text = self.scoop.authorName ? self.scoop.authorName : self.user.name;
-    self.headlineTextView.text = self.scoop.headline;
-    self.leadTextView.text = self.scoop.lead;
-    self.bodyTextView.text = self.scoop.body;
+- (void)launchImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType {
     
-    self.publishSwitch.on = self.scoop.published;
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = sourceType;
+    picker.delegate = self;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
-    self.photoImageView.clipsToBounds = YES;
-    self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
-    if (self.scoop.photo) {
-        self.photo = self.scoop.photo;
-        self.photoImageView.image = self.scoop.photo;
-//        [self.photoImageView asyncDownloadFromURL:self.scoop.photoURL];
-    } else {
-        self.photo = nil;
-        self.photoImageView.image = [UIImage imageNamed:@"image_placeholder"];
+    [self presentViewController:picker
+                       animated:YES
+                     completion:^{
+                         // Cuando termine la animación que muestra el picker
+                         // se ejecutará este bloque.
+                     }];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    __block UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake(screenBounds.size.height * screenScale, screenBounds.size.width * screenScale);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        img = [img resizedImage:screenSize interpolationQuality:kCGInterpolationMedium];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.photo = img;
+            self.photoImageView.image = img;
+        });
+    });
+    
+    // Ocultar el presented VC
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    // Ocultar el presented VC
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 // Cuando termine la animación que oculta el picker
+                                 // se ejecutará este bloque.
+                             }];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [self notifyKeyboardWillShow:nil];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    
+    switch (textView.tag) {
+        case HEADLINE_TAG:
+            self.scoop.headline = textView.text;
+            break;
+        case LEAD_TAG:
+            self.scoop.lead = textView.text;
+            break;
+        case BODY_TAG:
+            self.scoop.body = textView.text;
+            break;
+        default:
+            break;
     }
+    
+    [textView resignFirstResponder];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UITextFieldDelegate
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.scoop.authorName = textField.text;
+    [textField resignFirstResponder];
 }
-*/
+
+
 
 @end

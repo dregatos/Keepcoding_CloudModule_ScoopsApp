@@ -16,6 +16,7 @@
 #import "DRGPublishedCell.h"
 #import "UIImageView+AsyncDownload.h"
 #import "UIViewController+Alert.h"
+#import "NotificationKeys.h"
 
 #define PUBLISHED_SELECTED      0
 #define UNPUBLISHED_SELECTED    1
@@ -32,7 +33,7 @@
     _user = reader;
     
     UIImageView *imView = (UIImageView *)self.navigationItem.leftBarButtonItem.customView;
-    [imView asyncDownloadFromURL:reader.pictureURL];
+    [imView asyncDownloadFromURL:reader.pictureURL andCompletion:nil];
 }
 
 - (NSMutableArray *)published  {
@@ -70,15 +71,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Notifications **********************
+    [self registerForNotifications];
+    
     self.tableView.delegate = self;
     
     [self setupNavBar];
     [self setupSegmentedController];
+    [self fetchScoops];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+//    [self unregisterForNotifications];
+}
+
+#pragma mark - NSNotification
+
+- (void)dealloc {
+    [self unregisterForNotifications];
+}
+
+- (void)registerForNotifications {
+    // Add your notification observer here
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyNeedRefresh:)
+                                                 name:SCOOP_WAS_SAVED
+                                               object:nil];
+}
+
+- (void)unregisterForNotifications {
+    // Clear out _all_ observations that this object was making
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// SCOOP_WAS_CREATED AND SCOOP_WAS_EDITED
+- (void)notifyNeedRefresh:(NSNotification *)notification {
     [self fetchScoops];
 }
 
@@ -219,7 +253,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
+    // Get the new view controller using [segue destinationViewController]
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"showNewScoopVC"]) {
         DRGNewScoopVC *nextVC = (DRGNewScoopVC *)[segue destinationViewController];
@@ -235,12 +269,12 @@
 #pragma mark - Helpers 
 
 - (void)fetchScoops {
-    if (self.segmentedControl.selectedSegmentIndex == 1) {
+    if (self.segmentedControl.selectedSegmentIndex == UNPUBLISHED_SELECTED) {
         [[DRGAzureManager sharedInstance] fetchCurrentUserUnpublishedWithCompletion:^(NSArray *result, NSError *error) {
             self.unpublished = [result mutableCopy];
             [self.tableView reloadData];
         }];
-    } else {
+    } else if (self.segmentedControl.selectedSegmentIndex == PUBLISHED_SELECTED) {
         [[DRGAzureManager sharedInstance] fetchCurrentUserPublishedWithCompletion:^(NSArray *result, NSError *error) {
             self.published = [result mutableCopy];
             [self.tableView reloadData];
@@ -249,11 +283,13 @@
 }
 
 - (NSMutableArray *)modelForCurrentSegmentedControl {
-    if (self.segmentedControl.selectedSegmentIndex == 1) {
+    if (self.segmentedControl.selectedSegmentIndex == UNPUBLISHED_SELECTED) {
         return self.unpublished;
+    } else if (self.segmentedControl.selectedSegmentIndex == PUBLISHED_SELECTED) {
+        return self.published;
     }
     
-    return self.published;
+    return nil;
 }
 
 @end

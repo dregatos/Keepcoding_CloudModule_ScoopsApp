@@ -17,6 +17,7 @@
 @property (nonatomic, strong) DRGUser *user;
 
 // IBOutlets
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIControl *topContainer;
 @property (weak, nonatomic) IBOutlet UITextField *authorTextField;

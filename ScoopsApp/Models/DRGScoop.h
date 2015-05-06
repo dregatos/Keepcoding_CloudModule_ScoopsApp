@@ -23,9 +23,13 @@
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *authorName;
 
-@property (nonatomic, strong) UIImage *photo;
 @property (nonatomic, strong) NSURL *photoURL;
-@property (nonatomic, strong) NSData *photoData;
+@property (nonatomic, strong) NSData *photoData;            // not used
+@property (nonatomic, strong) UIImage *photo;               
+
+@property (nonatomic, strong) NSURL *photoThumbnailURL;
+@property (nonatomic, strong) NSData *photoThumbnailData;   // not used
+@property (nonatomic, strong) UIImage *photoThumbnail;      // not used
 
 @property (nonatomic, getter = isPublished) BOOL published;
 

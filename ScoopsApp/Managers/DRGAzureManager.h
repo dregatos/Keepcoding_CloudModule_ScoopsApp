@@ -41,11 +41,18 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 /** Returns an array of DRGScoop objects with published property = NO and authorID = current user */
 - (void)fetchCurrentUserUnpublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock;
 
-- (void)uploadScoop:(DRGScoop *)newScoop
+- (void)insertScoop:(DRGScoop *)newScoop
      withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;
 
 - (void)updateScoop:(DRGScoop *)updatedScoop
      withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock;
+
+- (void)uploadImage:(UIImage *)anImage
+           forScoop:(DRGScoop *)aScoop
+     withCompletion:(void(^)(BOOL success, DRGScoop *scoop, NSError *error))completionBlock;
+
+- (void)downloadImageForScoop:(DRGScoop *)aScoop
+               withCompletion:(void(^)(UIImage *image, NSError *error))completionBlock;
 
 #pragma mark - Persistance
 

@@ -8,6 +8,7 @@
 
 #import "DRGScoop.h"
 #import "NSString+Validation.h"
+#import "NSDictionary+Additions.h"
 
 // JSON
 #define ID          @"id"
@@ -18,6 +19,7 @@
 #define AUTHORNAME  @"authorname"
 #define CREATEDAT   @"__createdAt"
 #define PUBLISHED   @"published"
+#define PHOTOURL    @"photoURL"
 
 @interface DRGScoop ()
 
@@ -39,7 +41,8 @@
              BODY:scoop.body ? scoop.body : @"",
              AUTHORID:scoop.authorId ? scoop.authorId : @"",
              AUTHORNAME:scoop.authorName ? scoop.authorName : @"",
-             PUBLISHED:[NSNumber numberWithBool:scoop.isPublished]};
+             PUBLISHED:[NSNumber numberWithBool:scoop.isPublished],
+             PHOTOURL:scoop.photoURL.absoluteString ? scoop.photoURL.absoluteString : @""};
 }
 
 + (instancetype)scoopFromDictionary:(NSDictionary *)dict {
@@ -49,6 +52,9 @@
 - (instancetype)initFromDictionary:(NSDictionary *)dict {
     
     if (self = [super init]) {
+        
+        dict = [dict removeNullValues];
+        
         _scoopID = dict[ID] ? dict[ID] : @"";
         _headline = dict[HEADLINE] ? dict[HEADLINE] : @"";
         _lead = dict[LEAD] ? dict[LEAD] : @"";
@@ -57,6 +63,7 @@
         _authorName = dict[AUTHORNAME] ? dict[AUTHORNAME] : @"";
         _published = [dict[PUBLISHED] integerValue] == 1 ? YES : NO;
         _createdAt = dict[CREATEDAT]; // ? dict[CREATEDAT] : @"";
+        _photoURL = dict[PHOTOURL] ? [NSURL URLWithString:dict[PHOTOURL]] : [NSURL URLWithString:@""];
     }
     
     return self;

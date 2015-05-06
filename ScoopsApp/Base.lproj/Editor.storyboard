@@ -363,6 +363,10 @@
                                     </mask>
                                 </variation>
                             </toolbar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="O1r-69-nca">
+                                <rect key="frame" x="290" y="290" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -375,12 +379,15 @@
                             <constraint firstItem="VXv-3q-P1Y" firstAttribute="top" secondItem="2RO-c9-8Uy" secondAttribute="bottom" id="fcH-Hh-nXW"/>
                             <constraint firstItem="VXv-3q-P1Y" firstAttribute="leading" secondItem="jja-KB-3sg" secondAttribute="leading" id="fqd-Pi-Ff0"/>
                             <constraint firstItem="2RO-c9-8Uy" firstAttribute="top" secondItem="enI-G7-caI" secondAttribute="bottom" id="hWT-Yf-W6E"/>
+                            <constraint firstAttribute="centerY" secondItem="O1r-69-nca" secondAttribute="centerY" constant="-8.5" id="mE3-M0-pL4"/>
+                            <constraint firstAttribute="centerX" secondItem="O1r-69-nca" secondAttribute="centerX" constant="-8.5" id="sl2-bo-2Dm"/>
                         </constraints>
                         <connections>
                             <action selector="hideKeyboard:" destination="Zgv-Uz-1qy" eventType="touchUpInside" id="uRL-VM-RkB"/>
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="O1r-69-nca" id="WY5-qI-iEN"/>
                         <outlet property="authorTextField" destination="01Q-80-fK1" id="jXV-84-z8v"/>
                         <outlet property="bodyTextView" destination="EvA-C5-Mbf" id="eAn-Z4-aqT"/>
                         <outlet property="contentView" destination="2RO-c9-8Uy" id="1Lk-x4-eKV"/>

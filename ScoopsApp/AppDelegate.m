@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DRGAzureManager.h"
+#import "DRGScoop.h"
 
 @interface AppDelegate ()
 
@@ -27,7 +28,26 @@
         UINavigationController *navController = (UINavigationController *)[mainStoryboard instantiateInitialViewController];
         self.window.rootViewController = navController;
     }
-        
+    
+    // Testing
+    /*
+    UIImage *im = [UIImage imageNamed:@"image_placeholder"];
+    DRGScoop *scoop = [DRGScoop scoopWithHeadline:@"Headline" lead:@"Lead" body:@"Body" authorName:@"David"];
+    scoop.scoopID = @"D135205A-07BB-4C0A-B732-A37F003CE779";
+    [[DRGAzureManager sharedInstance] uploadImage:im
+                                         forScoop:scoop
+                                   withCompletion:^(BOOL success, DRGScoop *scoop, NSError *error) {
+                                       
+                                       if (error) {
+                                           NSLog(@"Error: %@", error.userInfo);
+                                       }
+                                       
+                                       if (success) {
+                                           NSLog(@"Scoop: %@", scoop.description);
+                                       }
+    }];
+     */
+    
     return YES;
 }
 

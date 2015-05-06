@@ -10,7 +10,24 @@
 
 @implementation UIImageView (AsyncDownload)
 
-- (void)asyncDownloadFromURL:(NSURL *)url {
+- (void)asyncDownloadFromURL:(NSURL *)url andCompletion:(void(^)(UIImage *image))completionBlock {
+    [self asyncDownloadFromURL:url withPlaceholder:nil andCompletion:^(UIImage *image) {
+        if (completionBlock) {
+            completionBlock(image);
+        }
+    }];
+}
+
+- (void)asyncDownloadFromURL:(NSURL *)url
+             withPlaceholder:(UIImage *)placeholder
+               andCompletion:(void(^)(UIImage *image))completionBlock {
+    
+    self.image = placeholder;
+    if (!url || [url isEqual:NULL]) {
+        return;
+    } else if ([url.absoluteString isEqualToString:@""]) {
+        return;
+    }
     
     UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityView.hidesWhenStopped = YES;
@@ -29,8 +46,13 @@
             self.image = image;
             [activityView stopAnimating];
             [activityView removeFromSuperview];
+            
+            if (completionBlock) {
+                completionBlock(image);
+            }
         });
     });
 }
+
 
 @end
