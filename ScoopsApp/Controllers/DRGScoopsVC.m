@@ -159,7 +159,8 @@
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
-    [[DRGAzureManager sharedInstance] fetchScoop:selectedScoop withCompletion:^(DRGScoop *scoop, NSError *error) {
+    [[DRGAzureManager sharedInstance] fetchScoopWithID:selectedScoop.scoopID
+                                        withCompletion:^(DRGScoop *scoop, NSError *error) {
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
@@ -167,6 +168,9 @@
             NSLog(@"Error: %@", error.localizedDescription);
             return;
         }
+                                            
+        // For now I am reusing previously download image
+        scoop.photo = selectedScoop.photo;
         
         [self performSegueWithIdentifier:@"showScoopDetailVC" sender:scoop];
     }];
@@ -183,7 +187,7 @@
     [self.refreshControl beginRefreshing];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    [[DRGAzureManager sharedInstance] fetchBasicInfoOfAvailableScoopsWithCompletion:^(NSArray *result, NSError *error) {
+    [[DRGAzureManager sharedInstance] fetchAllPublishedScoopsWithCompletion:^(NSArray *result, NSError *error) {
         self.model = [result mutableCopy];
         [self reloadData];
     }];

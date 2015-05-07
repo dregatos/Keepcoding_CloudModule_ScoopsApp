@@ -56,6 +56,10 @@
     [activityView startAnimating];
     [[DRGAzureManager sharedInstance] downloadImageForScoop:scoop
                                              withCompletion:^(UIImage *image, NSError *error) {
+                                                 
+                                                 if (error) {
+                                                     NSLog(@"Error: %@", error.localizedDescription);
+                                                 }
                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                      [activityView stopAnimating];
                                                      scoop.photo = image;

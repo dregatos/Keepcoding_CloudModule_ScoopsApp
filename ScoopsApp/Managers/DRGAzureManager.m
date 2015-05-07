@@ -47,6 +47,7 @@ NSString * const tokenFBKey = @"tokenFB";
 
 #pragma mark - API
 
+// External methods
 - (void)fetchCurrentUserInfoWithCompletion:(void(^)(DRGUser *user, NSError *error))completionBlock {
     [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_USER
                                                   body:nil
@@ -59,53 +60,20 @@ NSString * const tokenFBKey = @"tokenFB";
                                             }];
 }
 
-- (void)fetchFullInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
-    
-    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
-                                                  body:nil
-                                            HTTPMethod:@"GET"
-                                            parameters:nil
-                                               headers:nil
-                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                                
-                                                NSMutableArray *mArr = [NSMutableArray new];
-                                                if ([result isKindOfClass:[NSArray class]]) {
-                                                    for (NSDictionary *dic in ((NSArray *)result)) {
-                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
-                                                        if (scoop) { [mArr addObject:scoop]; }
-                                                    }
-                                                }
-                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
-                                            }];
+- (void)fetchAllPublishedScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [self fetchAllScoopsWithBasicInfo:YES
+                            published:YES
+                          forAuthorId:nil
+                        andCompletion:^(NSArray *result, NSError *error) {
+                            completionBlock(result,error);
+                        }];
 }
 
-- (void)fetchBasicInfoOfAvailableScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+- (void)fetchScoopWithID:(NSString *)scoopID withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock {
     
-    NSDictionary *parameters = @{@"info" : @"basic"};
-    
-    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
-                                                  body:nil
-                                            HTTPMethod:@"GET"
-                                            parameters:parameters
-                                               headers:nil
-                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                                
-                                                NSMutableArray *mArr = [NSMutableArray new];
-                                                if ([result isKindOfClass:[NSArray class]]) {
-                                                    for (NSDictionary *dic in ((NSArray *)result)) {
-                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
-                                                        if (scoop) { [mArr addObject:scoop]; }
-                                                    }
-                                                }
-                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
-                                            }];
-}
+    NSDictionary *parameters = @{@"scoopID" : scoopID};
 
-- (void)fetchScoop:(DRGScoop *)scoop withCompletion:(void(^)(DRGScoop *scoop, NSError *error))completionBlock {
-    
-    NSDictionary *parameters = @{@"scoopID" : scoop.scoopID};
-
-    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
+    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOP
                                                   body:nil
                                             HTTPMethod:@"GET"
                                             parameters:parameters
@@ -130,42 +98,22 @@ NSString * const tokenFBKey = @"tokenFB";
                                             }];
 }
 
-- (void)fetchCurrentUserPublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
-    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_USER_PUBLISHED
-                                                  body:nil
-                                            HTTPMethod:@"GET"
-                                            parameters:nil
-                                               headers:nil
-                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                                
-                                                NSMutableArray *mArr = [NSMutableArray new];
-                                                if ([result isKindOfClass:[NSArray class]]) {
-                                                    for (NSDictionary *dic in ((NSArray *)result)) {
-                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
-                                                        if (scoop) { [mArr addObject:scoop]; }
-                                                    }
-                                                }
-                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
-                                            }];
+- (void)fetchMyPublishedScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [self fetchAllScoopsWithBasicInfo:YES
+                            published:YES
+                          forAuthorId:self.client.currentUser.userId
+                        andCompletion:^(NSArray *result, NSError *error) {
+                            completionBlock(result,error);
+    }];
 }
 
-- (void)fetchCurrentUserUnpublishedWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
-    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_USER_UNPUBLISHED
-                                                  body:nil
-                                            HTTPMethod:@"GET"
-                                            parameters:nil
-                                               headers:nil
-                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                                
-                                                NSMutableArray *mArr = [NSMutableArray new];
-                                                if ([result isKindOfClass:[NSArray class]]) {
-                                                    for (NSDictionary *dic in ((NSArray *)result)) {
-                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
-                                                        if (scoop) { [mArr addObject:scoop]; }
-                                                    }
-                                                }
-                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
-                                            }];
+- (void)fetchMyUnPublishedScoopsWithCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    [self fetchAllScoopsWithBasicInfo:YES
+                            published:NO
+                          forAuthorId:self.client.currentUser.userId
+                        andCompletion:^(NSArray *result, NSError *error) {
+                            completionBlock(result,error);
+                        }];
 }
 
 - (void)insertScoop:(DRGScoop *)newScoop
@@ -191,8 +139,6 @@ NSString * const tokenFBKey = @"tokenFB";
           completionBlock(scoop, error);
       }];
 }
-
-#pragma mark - Blobs
 
 - (void)uploadImage:(UIImage *)anImage
            forScoop:(DRGScoop *)aScoop
@@ -245,17 +191,58 @@ NSString * const tokenFBKey = @"tokenFB";
 - (void)downloadImageForScoop:(DRGScoop *)aScoop
                withCompletion:(void(^)(UIImage *image, NSError *error))completionBlock {
     
-    NSURL *sasURL = aScoop.photoURL;
-    
-    if (!sasURL) {
-        // TODO create not image available error
-        completionBlock(nil,nil);
-        return;
-    }
-    
-    [self handleSaSURLToDownload:sasURL completionHandleSaS:^(id result, NSError *error) {
-        completionBlock(result,error);
+    NSString *imName = [NSString stringWithFormat:@"%@.jpg", aScoop.scoopID];
+    [self requestSasURLForImageNamed:imName withCompletion:^(NSURL *sasURL, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            completionBlock(nil,error);
+            return;
+        }
+        
+        if (sasURL) {
+            // Upload scoop image
+            [self handleSaSURLToDownload:sasURL completionHandleSaS:^(id result, NSError *error) {
+                if (error) {
+                    NSLog(@"Error: %@", error.localizedDescription);
+                    completionBlock(nil,error);
+                    return;
+                }
+                
+                completionBlock(result,error);
+            }];
+            
+        } else {
+            completionBlock(nil,error);
+        }
     }];
+}
+
+// Internal methods
+- (void)fetchAllScoopsWithBasicInfo:(BOOL)basic
+                          published:(BOOL)published
+                        forAuthorId:(NSString *)authorID
+                      andCompletion:(void(^)(NSArray *result, NSError *error))completionBlock {
+    
+    NSDictionary *parameters = @{@"authorID" : authorID ? authorID : @"",
+                                 @"basic" : basic ? @"TRUE" : @"FALSE",
+                                 @"published" : published ? @"TRUE" : @"FALSE"};
+    
+    [[DRGAzureManager sharedInstance].client invokeAPI:AZURE_API_GET_SCOOPS
+                                                  body:nil
+                                            HTTPMethod:@"GET"
+                                            parameters:parameters
+                                               headers:nil
+                                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                                
+                                                NSMutableArray *mArr = [NSMutableArray new];
+                                                if ([result isKindOfClass:[NSArray class]]) {
+                                                    for (NSDictionary *dic in ((NSArray *)result)) {
+                                                        DRGScoop *scoop = [DRGScoop scoopFromDictionary:dic];
+                                                        if (scoop) { [mArr addObject:scoop]; }
+                                                    }
+                                                }
+                                                completionBlock([self sortedScoopArrayByPublicationDate:mArr],error);
+                                            }];
 }
 
 - (void)requestSasURLForImageNamed:(NSString *)imageName
@@ -270,8 +257,8 @@ NSString * const tokenFBKey = @"tokenFB";
               headers:nil
            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
                
-               if (!error) {
-                   NSLog(@"resultado --> %@", result);
+               if (error) {
+                   NSLog(@"Error -->> %@", error.localizedDescription);
                }
                
                NSURL *sasURL;

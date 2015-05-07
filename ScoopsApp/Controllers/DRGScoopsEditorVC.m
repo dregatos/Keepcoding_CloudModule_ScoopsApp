@@ -231,12 +231,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     // Get data
-    DRGScoop *scoop = (DRGScoop *)[[self modelForCurrentSegmentedControl] objectAtIndex:indexPath.row];
+    DRGScoop *selectedScoop = (DRGScoop *)[[self modelForCurrentSegmentedControl] objectAtIndex:indexPath.row];
     
-    [self performSegueWithIdentifier:@"showScoopEditorVC" sender:scoop];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    [[DRGAzureManager sharedInstance] fetchScoopWithID:selectedScoop.scoopID
+                                        withCompletion:^(DRGScoop *scoop, NSError *error) {
+                                            
+                                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                            
+                                            if (error) {
+                                                NSLog(@"Error: %@", error.localizedDescription);
+                                                return;
+                                            }
+                                            
+                                            // For now I am reusing previously download image
+                                            scoop.photo = selectedScoop.photo;
+                                            
+                                            [self performSegueWithIdentifier:@"showScoopEditorVC" sender:scoop];
+                                        }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -271,16 +285,16 @@
 - (void)fetchScoops {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
-    if (self.segmentedControl.selectedSegmentIndex == UNPUBLISHED_SELECTED) {
-        [[DRGAzureManager sharedInstance] fetchCurrentUserUnpublishedWithCompletion:^(NSArray *result, NSError *error) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            self.unpublished = [result mutableCopy];
-            [self.tableView reloadData];
-        }];
-    } else if (self.segmentedControl.selectedSegmentIndex == PUBLISHED_SELECTED) {
-        [[DRGAzureManager sharedInstance] fetchCurrentUserPublishedWithCompletion:^(NSArray *result, NSError *error) {
+    if (self.segmentedControl.selectedSegmentIndex == PUBLISHED_SELECTED) {
+        [[DRGAzureManager sharedInstance] fetchMyPublishedScoopsWithCompletion:^(NSArray *result, NSError *error) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             self.published = [result mutableCopy];
+            [self.tableView reloadData];
+        }];
+    } else if (self.segmentedControl.selectedSegmentIndex == UNPUBLISHED_SELECTED) {
+        [[DRGAzureManager sharedInstance] fetchMyUnPublishedScoopsWithCompletion:^(NSArray *result, NSError *error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            self.unpublished = [result mutableCopy];
             [self.tableView reloadData];
         }];
     }
