@@ -220,7 +220,7 @@
     if (self.refreshControl) {
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MMM d, h:mm a"];
+        [formatter setDateFormat:@"EEEE, MMMM dd YYYY "];
         NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
                                                                     forKey:NSForegroundColorAttributeName];

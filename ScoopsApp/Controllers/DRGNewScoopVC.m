@@ -205,8 +205,11 @@
 }
 
 - (IBAction)cancenBtnPressed:(id)sender {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)saveBtnPressed:(id)sender {
@@ -299,8 +302,11 @@
         [self showAlertWithMessage:error.localizedDescription];
     } else if (isFinished) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SCOOP_WAS_SAVED object:nil];
-//        [self dismissViewControllerAnimated:YES completion:nil];
-        [self.navigationController popViewControllerAnimated:YES];
+        if (self.navigationController) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     } else {
         [self showAlertWithMessage:@"UNFINISHED WITH NO ERROR!!!"];
     }
