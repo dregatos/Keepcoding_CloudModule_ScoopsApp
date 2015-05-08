@@ -8,6 +8,7 @@
 
 #import "DRGScoopDetailVC.h"
 #import "DRGScoop.h"
+#import "DRGThemeManager.h"
 
 @interface DRGScoopDetailVC ()
 
@@ -38,6 +39,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_LightGreen];
+    
+    UIBarButtonItem *likeBtn = [[UIBarButtonItem alloc] initWithTitle:@"Like" style:UIBarButtonItemStylePlain target:self action:@selector(likeBtnPressed:)];
+    self.navigationItem.rightBarButtonItem = likeBtn;
+    
     [self syncViewAndModel];
 }
 
@@ -54,21 +60,37 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = NSDateFormatterShortStyle;
     self.createdAtLbl.text = [formatter stringFromDate:self.scoop.createdAt];
+    self.photoView.image = self.scoop.photo;
     self.headlineLbl.text = self.scoop.headline;
     self.scoopTextView.text = [NSString stringWithFormat:@"%@\n\n%@", self.scoop.lead, self.scoop.body];
 }
 
 - (void)updateScrollViewLayout {
-//    self.heightHeadlineConstrain.constant = [self heightThatFitSizeOfContent:self.headlineLbl];
-//    self.heightScoopTextConstrain.constant = [self heightThatFitSizeOfContent:self.scoopTextView];
+//    CGFloat calculatedHeight = [self heightThatFitSizeOfContent:self.headlineLbl] + [self heightThatFitSizeOfContent:self.scoopTextView] + 100;
+//    
+//    self.heightContentViewConstrain.constant = calculatedHeight > self.view.bounds.size.height ? calculatedHeight : self.view.bounds.size.height;
     
-    CGFloat calculatedHeight = [self heightThatFitSizeOfContent:self.headlineLbl] + [self heightThatFitSizeOfContent:self.scoopTextView] + 100;
+    NSLog(@"heightHeadlineConstrain: %f",self.heightHeadlineConstrain.constant);
+    self.heightHeadlineConstrain.constant = [self heightThatFitSizeOfContent:self.headlineLbl];
+    NSLog(@"heightScoopTextConstrain: %f",self.heightScoopTextConstrain.constant);
+    self.heightScoopTextConstrain.constant = [self heightThatFitSizeOfContent:self.scoopTextView];
     
-    self.heightContentViewConstrain.constant = calculatedHeight > self.view.bounds.size.height ? calculatedHeight : self.view.bounds.size.height;
+    NSLog(@"NEW heightHeadlineConstrain: %f",self.heightHeadlineConstrain.constant);
+    NSLog(@"NEW heightScoopTextConstrain: %f",self.heightScoopTextConstrain.constant);
+
+    [self.view needsUpdateConstraints];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)likeBtnPressed:(id)sender {
+    
+}
+
+#pragma mark - Helpers
+
 - (CGFloat)heightThatFitSizeOfContent:(UIView *)myView {
-    CGSize viewSize = [myView sizeThatFits:CGSizeMake(myView.frame.size.width, FLT_MAX)];
+    CGSize viewSize = [myView sizeThatFits:myView.bounds.size];
     
     return viewSize.height;
 }

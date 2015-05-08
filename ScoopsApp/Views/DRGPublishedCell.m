@@ -10,6 +10,7 @@
 #import "DRGAzureManager.h"
 #import "DRGScoop.h"
 #import "UIImageView+AsyncDownload.h"
+#import "DRGThemeManager.h"
 
 @class DRGScoop;
 
@@ -27,11 +28,18 @@
     // Initialization code
     self.backgroundColor = [UIColor clearColor];
     
+    self.headlineLbl.font = [DRGThemeManager defaultFontType:ThemeFontType_Normal withSize:16];
+    self.headlineLbl.textColor = [DRGThemeManager colorOfType:-1];
+    
     self.photoImageView.backgroundColor = [UIColor colorWithWhite:0.2 alpha:1.];
     self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoImageView.clipsToBounds = YES;
     
     self.headlineLbl.numberOfLines = 3;
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-1, self.bounds.size.width, 1)];
+    separator.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen];
+    [self addSubview:separator];
 }
 
 - (void)prepareForReuse{

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 DRG. All rights reserved.
 //
 
+@import QuartzCore;
+
 #import "DRGNewScoopVC.h"
 #import "DRGAzureManager.h"
 #import "DRGScoop.h"
@@ -14,18 +16,19 @@
 #import "UIImage+Resize.h"
 #import "NSString+Validation.h"
 #import "NotificationKeys.h"
+#import "DRGThemeManager.h"
 
 #define HEADLINE_TAG    100
 #define LEAD_TAG        101
 #define BODY_TAG        102
 
-#define HEIGHT_TOP_CONTAINER 120
+#define HEIGHT_TOP_CONTAINER 124
 #define HEIGHT_BAR_BOTTOM    44
 
 @interface DRGNewScoopVC () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
                                 UITextViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic) float initialHeight;
+@property (nonatomic) float initialTxtBoxHeight;
 
 @property (nonatomic, strong) UIImage *photo;
 
@@ -36,6 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.authorTextField.delegate = self;
     self.headlineTextView.delegate = self;
@@ -54,6 +59,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBarHidden = YES;
+    
+    [self customizeAppearence];
+    
     [self syncViewAndModel];
     
     // Autolayout
@@ -65,6 +74,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
     
     [self unregisterForNotifications];   //optionally we can unregister a notification when the view disappears
 }
@@ -81,10 +92,10 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(notifyKeyboardWillShow:)
-//                                                 name:UIKeyboardWillShowNotification
-//                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyKeyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
 }
 
 - (void)unregisterForNotifications {
@@ -106,13 +117,13 @@
     
     [self.view setNeedsLayout];
     CGFloat heightView = self.view.bounds.size.height;
-    CGFloat heightViewMinusKeyboard = heightView - kbFrame.size.height;
+    CGFloat newTxtViewHeight = heightView - kbFrame.size.height - 20;
     self.heightTopContainerViewConstrain.constant = 0;
-    self.heightBottomBarConstrain.constant = HEIGHT_BAR_BOTTOM + kbFrame.size.height;
+    self.heightBottomBarConstrain.constant = kbFrame.size.height;
     
     if (self.headlineTextView.isFirstResponder) {
         
-        self.heigthHeadlineConstrain.constant = heightViewMinusKeyboard; // - self.headlineTextView.frame.origin.y;
+        self.heigthHeadlineConstrain.constant = newTxtViewHeight; // - self.headlineTextView.frame.origin.y;
         self.heightLeadConstrain.constant = 0;
         self.leadTextView.alpha = 0;
         self.heightBodyConstrain.constant = 0;
@@ -122,7 +133,7 @@
         
         self.heigthHeadlineConstrain.constant = 0;
         self.headlineTextView.alpha = 0;
-        self.heightLeadConstrain.constant = heightViewMinusKeyboard; // - self.leadTextView.frame.origin.y;
+        self.heightLeadConstrain.constant = newTxtViewHeight; // - self.leadTextView.frame.origin.y;
         self.heightBodyConstrain.constant = 0;
         self.bodyTextView.alpha = 0;
         
@@ -132,16 +143,16 @@
         self.headlineTextView.alpha = 0;
         self.heightLeadConstrain.constant = 0;
         self.leadTextView.alpha = 0;
-        self.heightBodyConstrain.constant = heightViewMinusKeyboard; // - self.bodyTextView.frame.origin.y;
+        self.heightBodyConstrain.constant = newTxtViewHeight; // - self.bodyTextView.frame.origin.y;
     }
     
     // Sacar la duración de la animación del teclado
     double duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:duration == 0 ? 1 : duration
                      animations:^{
-        self.topContainer.alpha = 0;
-        [self.view layoutIfNeeded];
-    } completion:nil];
+                         self.topContainer.alpha = 0;
+                         [self.view layoutIfNeeded];
+                     } completion:nil];
 }
 
 // UIKeyboardWillHideNotification
@@ -166,13 +177,25 @@
 }
 
 - (void)applyInitialLayout {
-    CGFloat heightView = self.view.bounds.size.height;
+    
+    if (!self.initialTxtBoxHeight) {
+        CGFloat heightView = self.view.frame.size.height - 20;
+//        NSLog(@"heightView: %f", self.view.frame.size.height);
+        self.initialTxtBoxHeight = ((heightView - HEIGHT_BAR_BOTTOM) - HEIGHT_TOP_CONTAINER)/3;
+//        NSLog(@"initialTxtBoxHeight: %f", self.initialTxtBoxHeight);
+    }
+
     self.heightTopContainerViewConstrain.constant = HEIGHT_TOP_CONTAINER;
     self.heightBottomBarConstrain.constant = HEIGHT_BAR_BOTTOM;
-    self.initialHeight = (heightView - HEIGHT_TOP_CONTAINER - HEIGHT_BAR_BOTTOM)/3;
-    self.heigthHeadlineConstrain.constant = self.initialHeight;
-    self.heightLeadConstrain.constant = self.initialHeight;
-    self.heightBodyConstrain.constant = self.initialHeight;
+    self.heigthHeadlineConstrain.constant = self.initialTxtBoxHeight;
+    self.heightLeadConstrain.constant = self.initialTxtBoxHeight;
+    self.heightBodyConstrain.constant = self.initialTxtBoxHeight;
+    
+//    NSLog(@"heightTopContainerViewConstrain: %f", self.heightTopContainerViewConstrain.constant);
+//    NSLog(@"heigthHeadlineConstrain: %f", self.heigthHeadlineConstrain.constant);
+//    NSLog(@"heightLeadConstrain: %f", self.heightLeadConstrain.constant);
+//    NSLog(@"heightBodyConstrain: %f", self.heightBodyConstrain.constant);
+//    NSLog(@"heightBottomBarConstrain: %f", self.heightBottomBarConstrain.constant);
 }
 
 #pragma mark - IBActions
@@ -182,7 +205,8 @@
 }
 
 - (IBAction)cancenBtnPressed:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)saveBtnPressed:(id)sender {
@@ -211,6 +235,23 @@
 }
 
 #pragma mark - Utils
+
+- (void)customizeAppearence {
+    self.view.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_NormalGreen];
+    self.activityIndicator.color = [UIColor whiteColor];
+    
+    self.authorTextField.textColor = [UIColor colorWithWhite:0.15 alpha:1.];
+    
+    self.toolbar.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen];
+    self.toolbar.tintColor = [UIColor whiteColor]; //[DRGThemeManager colorOfType:ThemeColorType_LightGreen];
+    self.publishSwitch.onTintColor = [DRGThemeManager colorOfType:ThemeColorType_NormalGreen];
+    
+    for (UITextView *txtView in self.textViewCollection) {
+        txtView.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_LightGreen];
+        txtView.layer.cornerRadius = 5;
+        txtView.textColor = [UIColor colorWithWhite:0.15 alpha:1.];
+    }
+}
 
 - (void)syncViewAndModel {
     
@@ -258,7 +299,8 @@
         [self showAlertWithMessage:error.localizedDescription];
     } else if (isFinished) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SCOOP_WAS_SAVED object:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
+//        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self showAlertWithMessage:@"UNFINISHED WITH NO ERROR!!!"];
     }
@@ -429,7 +471,7 @@
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    [self notifyKeyboardWillShow:nil];
+//    [self notifyKeyboardWillShow:nil];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {

@@ -16,45 +16,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECi-27-K1q">
-                                <rect key="frame" x="225" y="275" width="150" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Duy-Jp-xKF"/>
-                                    <constraint firstAttribute="width" constant="150" id="fiH-e4-cbo"/>
-                                </constraints>
-                                <state key="normal" title="Facebook">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECi-27-K1q">
+                                <rect key="frame" x="158" y="501" width="285" height="39"/>
+                                <state key="normal" image="btn-facebook-signin">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="logInViaFacebook:" destination="8c3-pX-e21" eventType="touchUpInside" id="ucn-20-I4k"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31g-Vb-W6F">
-                                <rect key="frame" x="258" y="246" width="84" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scoops" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbr-zX-bvI">
-                                <rect key="frame" x="271" y="28" width="59" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="213" y="256" width="174" height="88"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="55"/>
+                                <color key="textColor" red="0.41960784309999999" green="0.46274509800000002" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.83137254900000002" green="0.77647058820000003" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ECi-27-K1q" firstAttribute="top" secondItem="31g-Vb-W6F" secondAttribute="bottom" constant="8" id="0om-jK-jaC"/>
                             <constraint firstAttribute="centerX" secondItem="sbr-zX-bvI" secondAttribute="centerX" id="1Gx-AQ-By5"/>
-                            <constraint firstItem="31g-Vb-W6F" firstAttribute="centerX" secondItem="ECi-27-K1q" secondAttribute="centerX" id="On8-d5-0gy"/>
+                            <constraint firstAttribute="centerY" secondItem="sbr-zX-bvI" secondAttribute="centerY" id="NCA-CD-GfF"/>
+                            <constraint firstItem="KRK-0J-gWR" firstAttribute="top" secondItem="ECi-27-K1q" secondAttribute="bottom" constant="60" id="OpF-kE-ARP"/>
                             <constraint firstAttribute="centerX" secondItem="ECi-27-K1q" secondAttribute="centerX" id="VKI-eO-G5Y"/>
-                            <constraint firstItem="sbr-zX-bvI" firstAttribute="top" secondItem="dyr-FJ-3AG" secondAttribute="bottom" constant="8" symbolic="YES" id="hDY-3C-0Wu"/>
-                            <constraint firstAttribute="centerY" secondItem="ECi-27-K1q" secondAttribute="centerY" id="yAR-3T-GG9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="facebookBtn" destination="ECi-27-K1q" id="uJI-4z-mid"/>
-                        <outlet property="loginLbl" destination="31g-Vb-W6F" id="Dgq-of-e2h"/>
                         <outlet property="scoopsLbl" destination="sbr-zX-bvI" id="lCR-eW-u4Y"/>
                     </connections>
                 </viewController>
@@ -63,4 +50,7 @@
             <point key="canvasLocation" x="95" y="380"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="btn-facebook-signin" width="285" height="39"/>
+    </resources>
 </document>

@@ -18,17 +18,16 @@
 
 // IBOutlets
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIControl *topContainer;
 @property (weak, nonatomic) IBOutlet UITextField *authorTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *publishSwitch;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (strong, nonatomic) IBOutletCollection(UITextView) NSArray *textViewCollection;
 @property (weak, nonatomic) IBOutlet UITextView *headlineTextView;
 @property (weak, nonatomic) IBOutlet UITextView *leadTextView;
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
-
 
 // Autolayout
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightTopContainerViewConstrain;

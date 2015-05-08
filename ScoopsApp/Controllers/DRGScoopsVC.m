@@ -13,6 +13,7 @@
 #import "DRGPublishedCell.h"
 #import "UIImageView+AsyncDownload.h"
 #import "UIViewController+Alert.h"
+#import "DRGThemeManager.h"
 
 @interface DRGScoopsVC ()
 
@@ -47,8 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Configure tableview
     // hidden rows if self.model.count = 0
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_BrownBackground];
     
     [self setupRefreshController];
     [self setupNavBar];
@@ -111,16 +115,13 @@
     // Return the number of sections.
     if ([self.model count]) {
         
-        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        tableView.backgroundView = nil;
+        tableView.backgroundView = nil; // Hide displayMessage
         return 1;
         
     } else {
         
         // Display a message when the table is empty
-        [self displayMessageOnTableview:tableView];
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
+        [self displayMessageOnTableview:tableView];        
     }
     
     return 0;
@@ -202,7 +203,7 @@
 - (void) setupRefreshController {
     // Initialize the refresh control.
     self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
+    self.refreshControl.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_NormalGreen];
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self
                             action:@selector(fetchScoops)

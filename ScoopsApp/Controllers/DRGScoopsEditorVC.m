@@ -17,6 +17,7 @@
 #import "UIImageView+AsyncDownload.h"
 #import "UIViewController+Alert.h"
 #import "NotificationKeys.h"
+#import "DRGThemeManager.h"
 
 #define PUBLISHED_SELECTED      0
 #define UNPUBLISHED_SELECTED    1
@@ -71,9 +72,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_BrownBackground];
+
     // Notifications **********************
     [self registerForNotifications];
     
+    self.addBtn.tintColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen];
+    
+    // Configure tableview
+    // hidden rows if self.model.count = 0
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen];
+    self.tableView.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_LightGreen];
+    self.tableView.layer.cornerRadius = 5.;
+    self.tableView.layer.borderColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen].CGColor;
+    self.tableView.layer.borderWidth = 1;
     self.tableView.delegate = self;
     
     [self setupNavBar];
@@ -123,9 +137,7 @@
 }
 
 - (void)setupSegmentedController {
-    // set up SegmentedController
-    //    self.mySegmentedController.tag = …;
-    //    self.mySegmentedController.tintColor = …;
+    self.segmentedControl.tintColor = [DRGThemeManager colorOfType:ThemeColorType_DarkGreen];
     [self.segmentedControl setTitle:@"Published" forSegmentAtIndex:PUBLISHED_SELECTED];
     [self.segmentedControl setTitle:@"Unpublished" forSegmentAtIndex:UNPUBLISHED_SELECTED];
     
@@ -143,8 +155,8 @@
     self.title = @"Editor";
     
     // NOTE: User image assigned on setUser
-    UIImageView *imView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    imView.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.];
+    UIImageView *imView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
+    imView.backgroundColor = [DRGThemeManager colorOfType:ThemeColorType_LightGreen];
     imView.layer.cornerRadius = imView.bounds.size.height/2;
     imView.layer.masksToBounds = YES;
     
@@ -231,6 +243,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     // Get data
     DRGScoop *selectedScoop = (DRGScoop *)[[self modelForCurrentSegmentedControl] objectAtIndex:indexPath.row];
     

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DRGAzureManager.h"
 #import "DRGScoop.h"
+#import "DRGThemeManager.h"
 
 @interface AppDelegate ()
 
@@ -29,24 +30,7 @@
         self.window.rootViewController = navController;
     }
     
-    // Testing
-    /*
-    UIImage *im = [UIImage imageNamed:@"image_placeholder"];
-    DRGScoop *scoop = [DRGScoop scoopWithHeadline:@"Headline" lead:@"Lead" body:@"Body" authorName:@"David"];
-    scoop.scoopID = @"D135205A-07BB-4C0A-B732-A37F003CE779";
-    [[DRGAzureManager sharedInstance] uploadImage:im
-                                         forScoop:scoop
-                                   withCompletion:^(BOOL success, DRGScoop *scoop, NSError *error) {
-                                       
-                                       if (error) {
-                                           NSLog(@"Error: %@", error.userInfo);
-                                       }
-                                       
-                                       if (success) {
-                                           NSLog(@"Scoop: %@", scoop.description);
-                                       }
-    }];
-     */
+    [self customiseAppeareance];
     
     return YES;
 }
@@ -72,5 +56,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Appearance
+
+- (void)customiseAppeareance {
+    
+    // Window
+    self.window.backgroundColor = [UIColor clearColor];
+    
+    // UINavigationBar ***
+    [[UINavigationBar appearance] setBarTintColor:[DRGThemeManager colorOfType:ThemeColorType_DarkGreen]];
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                           [DRGThemeManager defaultFontType:ThemeFontType_Logo withSize:22], NSFontAttributeName,
+                                                           nil]];
+    [[UINavigationBar appearance] setTintColor:[DRGThemeManager colorOfType:ThemeColorType_LightGreen]];
+}
+
 
 @end

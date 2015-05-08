@@ -289,7 +289,7 @@ NSString * const tokenFBKey = @"tokenFB";
                                                            NSLog(@"Error: %@", error.localizedDescription);
                                                        }
                                                        
-                                                       NSLog(@"resultado --> %@", response);
+//                                                       NSLog(@"resultado --> %@", response);
                                                        completion(response, error);
                                                    }];
     
@@ -308,7 +308,7 @@ NSString * const tokenFBKey = @"tokenFB";
                                                           
                                                           UIImage *image;
                                                           if (!error) {
-                                                              NSLog(@"resultado --> %@", response);
+//                                                              NSLog(@"resultado --> %@", response);
                                                               NSData *imData = [NSData dataWithContentsOfURL:location];
                                                               image = [UIImage imageWithData:imData];
                                                           }

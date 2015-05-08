@@ -16,6 +16,7 @@
 		070C4E901AEFC51700D418DB /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 070C4E8E1AEFC51700D418DB /* Editor.storyboard */; };
 		070C4E961AEFC75900D418DB /* DRGScoopsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E951AEFC75900D418DB /* DRGScoopsVC.m */; };
 		070C4E9A1AF0CC6700D418DB /* DRGNewScoopVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C4E991AF0CC6700D418DB /* DRGNewScoopVC.m */; };
+		0729F4921AFC1FD40061A0F5 /* DRGThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0729F4911AFC1FD40061A0F5 /* DRGThemeManager.m */; };
 		074DB5701AF92E2200518912 /* NSDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 074DB56F1AF92E2200518912 /* NSDictionary+Additions.m */; };
 		074F67781AED3977009FABEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F67771AED3977009FABEC /* main.m */; };
 		074F677B1AED3977009FABEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F677A1AED3977009FABEC /* AppDelegate.m */; };
@@ -64,6 +65,8 @@
 		070C4E951AEFC75900D418DB /* DRGScoopsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGScoopsVC.m; sourceTree = "<group>"; };
 		070C4E981AF0CC6700D418DB /* DRGNewScoopVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGNewScoopVC.h; sourceTree = "<group>"; };
 		070C4E991AF0CC6700D418DB /* DRGNewScoopVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGNewScoopVC.m; sourceTree = "<group>"; };
+		0729F4901AFC1FD40061A0F5 /* DRGThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRGThemeManager.h; sourceTree = "<group>"; };
+		0729F4911AFC1FD40061A0F5 /* DRGThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRGThemeManager.m; sourceTree = "<group>"; };
 		074DB56E1AF92E2200518912 /* NSDictionary+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Additions.h"; sourceTree = "<group>"; };
 		074DB56F1AF92E2200518912 /* NSDictionary+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Additions.m"; sourceTree = "<group>"; };
 		074F67721AED3977009FABEC /* ScoopsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoopsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,6 +286,8 @@
 				074F67AB1AED5A6A009FABEC /* AzureKeys.h */,
 				074F67A81AED5751009FABEC /* DRGAzureManager.h */,
 				074F67A91AED5751009FABEC /* DRGAzureManager.m */,
+				0729F4901AFC1FD40061A0F5 /* DRGThemeManager.h */,
+				0729F4911AFC1FD40061A0F5 /* DRGThemeManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 				07C76A351AF6A41E00EF0B3C /* UIImage+RoundedCorner.m in Sources */,
 				074F677B1AED3977009FABEC /* AppDelegate.m in Sources */,
 				070C4E9A1AF0CC6700D418DB /* DRGNewScoopVC.m in Sources */,
+				0729F4921AFC1FD40061A0F5 /* DRGThemeManager.m in Sources */,
 				074F67781AED3977009FABEC /* main.m in Sources */,
 				0798FAB91AF7742000FF7344 /* DRGPresentRightToLeftSegue.m in Sources */,
 				074F67A31AED50CD009FABEC /* DRGLoginPortalVC.m in Sources */,
